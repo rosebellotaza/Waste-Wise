@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
+import RegisterForm from '@/components/auth/RegisterForm.vue';
 </script>
 
 <template>
@@ -15,32 +16,9 @@ import AppLayout from '@/components/layout/AppLayout.vue'
             </v-card-title>
 
             <v-card-text class="bg-surface-light pt-4">
-              <v-form fast-fail @submit.prevent>
-                <v-text-field
-                  label="Firstname"
-                  variant="outlined"
-                ></v-text-field>
-                <v-text-field
-                  label="Lastname"
-                  variant="outlined"
-                ></v-text-field>
-                <v-text-field label="Email" variant="outlined"></v-text-field>
-
-                <v-text-field
-                  label="Password"
-                  type="password"
-                  variant="outlined"
-                ></v-text-field>
-                <v-text-field
-                  label="Password Confirmation"
-                  variant="outlined"
-                ></v-text-field>
-
-                <v-btn class="mt-2" type="submit" block color="green-darken-3"
-                  >Register</v-btn
-                >
-              </v-form>
-
+              <v-divider class="my-5"></v-divider>
+                <RegisterForm></RegisterForm>
+              <v-divider class="my-5"></v-divider>
               <v divider class="my-5">
                 <h5 class="text-center">
                   Already have account?
