@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
-import LoginForm from '@/components/auth/LoginForm.vue';
+import LoginForm from '@/components/auth/LoginForm.vue'
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import LoginForm from '@/components/auth/LoginForm.vue';
         <v-col cols="12" md="6" class="mx-auto pt-12">
           <v-card class="mx-auto" elevation="24">
             <v-card-title class="text-center">
-              <h3 class="font-weight-black  ">Waste Wise</h3>
+              <h3 class="font-weight-black">Waste Wise</h3>
               <p>Login Form</p>
             </v-card-title>
 
@@ -19,10 +19,10 @@ import LoginForm from '@/components/auth/LoginForm.vue';
               <v-divider class="my-5"></v-divider>
               <LoginForm></LoginForm>
               <v-divider class="my-5"></v-divider>
-                <h5 class="text-center">
-                  Don't have account?
-                  <RouterLink to="/register">Register here.</RouterLink>
-                </h5>
+              <h5 class="text-center">
+                Don't have account?
+                <RouterLink to="/dashboard">Register here.</RouterLink>
+              </h5>
             </v-card-text>
           </v-card>
         </v-col>

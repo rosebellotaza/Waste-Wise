@@ -9,7 +9,7 @@ function onClick() {
 </script>
 
 <template>
-  <v-responsive class="border rounded">
+  <v-responsive class="border rounded" border-radius="50px">
     <v-app :theme="theme">
       <v-app-bar
         class="px-3"
