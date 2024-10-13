@@ -8,10 +8,10 @@ import LoginForm from '@/components/auth/LoginForm.vue'
     <template #content>
       <v-img src="/images/logo2.png" width="400px" class="mx-auto"></v-img>
       <v-row>
-        <v-col cols="12" md="6" class="mx-auto pt-12">
-          <v-card class="mx-auto" elevation="24">
-            <v-card-title class="text-center">
-              <h3 class="font-weight-black">Waste Wise</h3>
+        <v-col cols="12" md="6" class="mx-auto pt-8">
+          <v-card class="mx-auto" elevation="24" color="green-darken-3">
+            <v-card-title class="text-center" >
+                <h3 class="font-weight-black">Waste Wise</h3>
               <p>Login Form</p>
             </v-card-title>
 

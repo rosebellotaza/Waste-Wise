@@ -1,18 +1,21 @@
 <template>
     <v-form fast-fail @submit.prevent>
+                <h3 class="mdi mdi-clipboard-account-outline" >Name</h3>
                 <v-text-field
-                  label="Your Name"
+                  label=""
                   variant="outlined"
                 ></v-text-field>
-                <v-text-field label="Email" variant="outlined"></v-text-field>
-
+                <h3 class="mdi mdi-email-outline">Email</h3>
+                <v-text-field label="" variant="outlined"></v-text-field>
+                <h3 class="mdi mdi-lock-outline">Password</h3>
                 <v-text-field
-                  label="Password"
+                  label=""
                   type="password"
                   variant="outlined"
                 ></v-text-field>
+                <h3 class="mdi mdi-lock-check-outline">Confirm Password</h3>
                 <v-text-field
-                  label="Password Confirmation"
+                  label=""
                   variant="outlined"
                 ></v-text-field>
 
@@ -21,3 +24,4 @@
                 >
               </v-form>
 </template>
+
