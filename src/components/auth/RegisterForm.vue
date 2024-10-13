@@ -1,6 +1,7 @@
 <script setup>
 import { requiredValidator,emailValidator, passwordValidator, confirmedValidator } from '@/utils/validators';
   import { ref } from 'vue'
+  import {supabase, formActionDefault } from '@/utils/supabase.js'
 
   const refVForm = ref()
 
@@ -14,6 +15,10 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
 
   const formData = ref ({
     ...formDataDefault
+  })
+
+  const formAction = ref ({
+    ...formActionDefault
   })
 
   const isPasswordVisible = ref(false)  
@@ -33,6 +38,27 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
 </script>
 
 <template>
+  <v-alert     
+  v-if="formAction.forSuccessMessage"
+  :text="formAction.formSuccessMessage"
+  title="Success!"
+  type="success"
+  variant="tonal"
+  density="compact"
+  border="start"
+  closable
+  ></v-alert 
+  v-if="formAction.formErrorMessage"
+  :text="formAction.formErrorMessage"
+  title="Try again!"
+  type="error"
+  variant="tonal"
+  density="compact"
+  border="start"
+  closable>
+  <v-alert>
+    
+  </v-alert>
     <v-form ref="refVForm" @submit.prevent="onFormSubmit">
       <v-row>
         <v-col cols="12" md="6">
