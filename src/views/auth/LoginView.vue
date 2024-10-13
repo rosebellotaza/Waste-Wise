@@ -1,15 +1,20 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
 import LoginForm from '@/components/auth/LoginForm.vue'
+import { useDisplay } from 'vuetify'
+
+const {mobile} =useDisplay()
 </script>
 
 <template>
   <AppLayout>
     <template #content>
-      <v-img src="/images/logo2.png" width="400px" class="mx-auto"></v-img>
+      <v-container fluid>
+        <v-img src="/images/logo2.png":width="mobile? '75%' : '25%'" class="mx-auto"></v-img>
       <v-row>
-        <v-col cols="12" md="6" class="mx-auto pt-8">
-          <v-card class="mx-auto" elevation="24" color="green-darken-3">
+        <v-col cols="12"  class="mx-auto" v-if="mobile"></v-col>
+        <v-col cols="12"  :class="mobile ? '' : 'pt-16'">
+          <v-card class="mx-auto" elevation="24" color="green-darken-3" max-width="600">
             <v-card-title class="text-center" >
                 <h3 class="font-weight-black">Waste Wise</h3>
               <p>Login Form</p>
@@ -17,7 +22,9 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 
             <v-card-text class="bg-surface-light pt-4">
               <v-divider class="my-5"></v-divider>
+
               <LoginForm></LoginForm>
+              
               <v-divider class="my-5"></v-divider>
               <h5 class="text-center" >
                 Don't have account?
@@ -25,8 +32,9 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               </h5>
             </v-card-text>
           </v-card>
-        </v-col>
+          </v-col>
       </v-row>
+      </v-container> 
     </template>
   </AppLayout>
 </template>
