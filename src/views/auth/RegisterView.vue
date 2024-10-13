@@ -22,7 +22,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
               <v divider class="my-5">
                 <h5 class="text-center">
                   Already have account?
-                  <RouterLink to="/">Log in here.</RouterLink>
+                  <RouterLink class="text-green-darken-4 font-weight-black" to="/">Log in here.</RouterLink>
                 </h5>
               </v>
             </v-card-text>

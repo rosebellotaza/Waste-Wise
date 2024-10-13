@@ -19,9 +19,9 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               <v-divider class="my-5"></v-divider>
               <LoginForm></LoginForm>
               <v-divider class="my-5"></v-divider>
-              <h5 class="text-center">
+              <h5 class="text-center" >
                 Don't have account?
-                <RouterLink to="/register">Register here.</RouterLink>
+                <RouterLink class="text-green-darken-4 font-weight-black" to="/register">Register here.</RouterLink>
               </h5>
             </v-card-text>
           </v-card>
