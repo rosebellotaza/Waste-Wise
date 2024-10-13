@@ -21,7 +21,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
               <v-divider class="my-5"></v-divider>
               <h5 class="text-center">
                 Don't have account?
-                <RouterLink to="/dashboard">Register here.</RouterLink>
+                <RouterLink to="/register">Register here.</RouterLink>
               </h5>
             </v-card-text>
           </v-card>
