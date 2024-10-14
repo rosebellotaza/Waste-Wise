@@ -1,15 +1,20 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
-import RegisterForm from '@/components/auth/RegisterForm.vue';
+import RegisterForm from '@/components/auth/RegisterForm.vue'
+import { useDisplay } from 'vuetify'
+
+const { mobile } = useDisplay()
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout  :is-with-app-bar-nav-icon="false">
     <template #content>
-      <v-img src="/images/logo2.png" width="400px" class="mx-auto"></v-img>
+      <v-container>
+        <v-img src="/images/logo2.png" width="400px" class="mx-auto" :width="mobile ? '75%' : '25%'"></v-img>
       <v-row>
-        <v-col cols="12" md="6" class="mx-auto pt-8">
-          <v-card class="mx-auto" elevation="24" color="green-darken-3">
+        <v-col cols="12" class="mx-auto" v-if="!mobile"></v-col>
+        <v-col cols="12" :class="mobile ? '' : 'pt-16'">
+          <v-card class="mx-auto" elevation="24" color="green-darken-3" max-width="800">
             <v-card-title class="text-center">
               <h3 class="font-weight-black">Waste Wise</h3>
               <p>Register Form</p>
@@ -27,8 +32,9 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
               </v>
             </v-card-text>
           </v-card>
-        </v-col>
+          </v-col>
       </v-row>
+      </v-container>
     </template>
   </AppLayout>
 </template>

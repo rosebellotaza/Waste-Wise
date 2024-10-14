@@ -3,6 +3,9 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
   import { ref } from 'vue'
   import AlertNotification from '@/components/common/AlertNotification.vue';
   import {supabase, formActionDefault } from '@/utils/supabase.js'
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter ()
 
   const formDataDefault = {
     firstname: '' ,
@@ -26,8 +29,7 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
 
 
   const onSubmit = async() => {
-    formAction.value = { ...formActionDefault}
-    formAction.value.formProcess = true
+    formAction.value = { ...formActionDefault, formProcess: true}
 
     const { data, error } = await supabase.auth.signUp({
     email: formData.value.email,
@@ -35,25 +37,29 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
     options: {
       data: {
         firstname:formData.value.firstname,
-        lastname: formData.value.lastname
+        lastname: formData.value.lastname,
+        // is_admin:true
       }
     }
   })
 
 if(error) {
-  console.log(error)
+  // console.log(error)
   formAction.value.formErrorMessage = error.message
   formAction.value.formStatus = error.status
 }
 else if (data) {
-  console.log(data)
+  // console.log(data)
   formAction.value.formSuccessMessage = 'Successfully Registered Account!'
   //Add here more actions if you want
-  refVForm.value?.reset()
+  // refVForm.value?.reset()
+  router.replace('/dashboard')
 }
 
+refVForm.value?.reset()
 formAction.value.formProcess = false
 }
+
   
   const onFormSubmit = () => {
     refVForm.value?.validate().then(({ valid}) => {
@@ -115,7 +121,7 @@ formAction.value.formProcess = false
                 <v-btn 
                 class="mt-2 mdi mdi-account-plus" type="submit" block color="green-darken-3" 
                 :disabled="formAction.formProcess" 
-                :loading="formAction.formProcess"
+                :loading="formAction.formProcess" 
                   >Register</v-btn
                 >
               </v-form>
