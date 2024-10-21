@@ -22,7 +22,8 @@ watch(props, () => {
     :permanent="!mobile"
     width="325"
   >
-    <v-list density="compact" nav>
+    <v-list density="compact" nav     color="green-darken-4"
+    >
       <v-list-item
         prepend-icon="mdi-view-dashboard"
         title="Dashboard"

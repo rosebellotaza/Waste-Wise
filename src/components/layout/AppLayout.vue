@@ -50,13 +50,13 @@ onMounted(() => {
 
         <v-spacer></v-spacer>
 
-        <v-btn
+        <!-- <v-btn
         class="me-2"
           :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
           variant="elevated"
           slim
           @click="onToggleTheme"
-        ></v-btn>
+        ></v-btn> -->
         <ProfileHeaderNavigation v-if="isLoggedIn"></ProfileHeaderNavigation>
       </v-app-bar>
 
@@ -66,12 +66,12 @@ onMounted(() => {
           <slot name="content"></slot>
       </v-main>
 
-      <v-footer :color="theme === 'light' ? 'green-darken-1' : 'green-darken-4'" elevation="24" border app
+      <!-- <v-footer :color="theme === 'light' ? 'green-darken-1' : 'green-darken-4'" elevation="24" border app
       >
       <div :class="mobile ? 'w-100 text-center' : ''">
           Copyright © 2024 - Waste Wise | All Rights Reserved
         </div>
-      </v-footer>
+      </v-footer> -->
     </v-app>
   </v-responsive>
 </template>

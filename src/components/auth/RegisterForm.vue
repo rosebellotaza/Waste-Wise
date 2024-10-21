@@ -53,7 +53,7 @@ else if (data) {
   formAction.value.formSuccessMessage = 'Successfully Registered Account!'
   //Add here more actions if you want
   // refVForm.value?.reset()
-  router.replace('/dashboard')
+  router.replace('/register')
 }
 
 refVForm.value?.reset()
@@ -71,59 +71,95 @@ formAction.value.formProcess = false
 
 <template>
   <AlertNotification 
-  :form-success-message="formAction.formSuccessMessage" 
-  :form-error-message="formAction.formErrorMessage"
+    :form-success-message="formAction.formSuccessMessage" 
+    :form-error-message="formAction.formErrorMessage"
   ></AlertNotification>
-    <v-form class="mt-4" ref="refVForm" @submit.prevent="onFormSubmit">
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field v-model="formData.firstname"
-            label="First Name"
-            prepend-inner-icon="mdi-clipboard-account-outline" :rules="[requiredValidator]"
-          ></v-text-field>
-        </v-col>
 
-        <v-col cols="12" md="6">
-          <v-text-field v-model="formData.lastname"
-            label="Last Name"
-            prepend-inner-icon="mdi-clipboard-account-outline" :rules="[requiredValidator]"
-          ></v-text-field>
-        </v-col>
+  <v-form class="mt-4" ref="refVForm" @submit.prevent="onFormSubmit">
+    <v-row>
+      <v-col cols="12" md="6">
+        <v-text-field 
+          v-model="formData.firstname"
+          label="First Name"
+          :rules="[requiredValidator]"
+        >
+          <template v-slot:prepend-inner>
+            <v-icon color="green-darken-3">mdi-clipboard-account-outline</v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
 
-        <v-col cols="12">
-          <v-text-field v-model="formData.email"
-            label="Email"
-            prepend-inner-icon="mdi-email-outline":rules="[requiredValidator, emailValidator]"
-            
-          ></v-text-field>
-        </v-col>
+      <v-col cols="12" md="6">
+        <v-text-field 
+          v-model="formData.lastname"
+          label="Last Name"
+          :rules="[requiredValidator]"
+        >
+          <template v-slot:prepend-inner>
+            <v-icon color="green-darken-3">mdi-clipboard-account-outline</v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
 
-        <v-col cols="12" md="6">
-          <v-text-field v-model="formData.password"
-          prepend-inner-icon="mdi-lock-outline"
-            label="Password"
-            :type="isPasswordVisible ? 'text' : 'password'"
-            :append-inner-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append-inner="isPasswordVisible = !isPasswordVisible":rules="[requiredValidator, passwordValidator]"
-          ></v-text-field>
-        </v-col>
+      <v-col cols="12">
+        <v-text-field 
+          v-model="formData.email"
+          label="Email"
+          :rules="[requiredValidator, emailValidator]"
+        >
+          <template v-slot:prepend-inner>
+            <v-icon color="green-darken-3">mdi-email-outline</v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
 
-        <v-col cols="12" md="6">
-          <v-text-field v-model="formData.password_confirmation"
-          prepend-inner-icon="mdi-lock-check-outline"
-            label="Confirm Password"
-            :type="isConfirmPasswordVisible ? 'text' : 'password'"
-            :append-inner-icon="isConfirmPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible" :rules="[requiredValidator, confirmedValidator(formData.password_confirmation, formData.password)]"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-                <v-btn 
-                class="mt-2 mdi mdi-account-plus" type="submit" block color="green-darken-3" 
-                :disabled="formAction.formProcess" 
-                :loading="formAction.formProcess" 
-                  >Register</v-btn
-                >
-              </v-form>
+      <v-col cols="12" md="6">
+        <v-text-field 
+          v-model="formData.password"
+          label="Password"
+          :type="isPasswordVisible ? 'text' : 'password'"
+          :rules="[requiredValidator, passwordValidator]"
+        >
+          <template v-slot:prepend-inner>
+            <v-icon color="green-darken-3">mdi-lock-outline</v-icon>
+          </template>
+          <template v-slot:append-inner>
+            <v-icon color="green-darken-3" @click="isPasswordVisible = !isPasswordVisible">
+              {{ isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
+
+      <v-col cols="12" md="6">
+        <v-text-field 
+          v-model="formData.password_confirmation"
+          label="Confirm Password"
+          :type="isConfirmPasswordVisible ? 'text' : 'password'"
+          :rules="[requiredValidator, confirmedValidator(formData.password_confirmation, formData.password)]"
+        >
+          <template v-slot:prepend-inner>
+            <v-icon color="green-darken-3">mdi-lock-check-outline</v-icon>
+          </template>
+          <template v-slot:append-inner>
+            <v-icon color="green-darken-3" @click="isConfirmPasswordVisible = !isConfirmPasswordVisible">
+              {{ isConfirmPasswordVisible ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </template>
+        </v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-btn 
+      type="submit" 
+      block 
+      color="green-darken-3" 
+      :disabled="formAction.formProcess" 
+      :loading="formAction.formProcess"
+    >
+      Register
+    </v-btn>
+  </v-form>
 </template>
+
 
