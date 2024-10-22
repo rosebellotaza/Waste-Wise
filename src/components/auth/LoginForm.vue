@@ -12,6 +12,7 @@ const router = useRouter()
 const formDataDefault = {
   email: '',
   password: '',
+  role: '', // Add role to form data
 }
 const formData = ref({
   ...formDataDefault,
@@ -26,6 +27,7 @@ const onSubmit = async () => {
   // Reset Form Action utils; Turn on processing at the same time
   formAction.value = { ...formActionDefault, formProcess: true }
 
+  // You can include the role in your authentication logic if needed
   const { data, error } = await supabase.auth.signInWithPassword({
     email: formData.value.email,
     password: formData.value.password,
@@ -38,8 +40,12 @@ const onSubmit = async () => {
   } else if (data) {
     // Add Success Message
     formAction.value.formSuccessMessage = 'Successfully Logged In.'
-    // Redirect Acct to Dashboard
-    router.replace('/dashboard')
+    // You can handle role-specific logic here
+    if (formData.value.role === 'User') {
+      router.replace('/dashboard')
+    } else if (formData.value.role === 'Collector') {
+      router.replace('/collector-dashboard') // Redirect to collector dashboard
+    }
   }
 
   // Reset Form
@@ -93,6 +99,18 @@ const onFormSubmit = () => {
       </template>
     </v-text-field>
 
+    <!-- Role selection field (User or Collector) with an icon inside -->
+    <v-select
+      v-model="formData.role"
+      label="Role"
+      :items="['User', 'Collector']"
+      :rules="[requiredValidator]"
+    >
+      <template v-slot:prepend-inner>
+        <v-icon color="green-darken-3">mdi-account-outline</v-icon>
+      </template>
+    </v-select>
+
     <!-- Login button -->
     <v-btn
       type="submit"
@@ -105,4 +123,3 @@ const onFormSubmit = () => {
     </v-btn>
   </v-form>
 </template>
-
