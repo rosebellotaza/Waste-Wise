@@ -7,7 +7,7 @@ const { mobile } = useDisplay()
 </script>
 
 <template>
-  <v-sheet class="background-image" height="140vh">
+  <v-sheet class="background-image" >
     <v-container>
       <br />
       <!-- Add a bounce animation class to the logo -->
@@ -74,5 +74,6 @@ const { mobile } = useDisplay()
   background-image: url('/images/bground.webp'); /* Ensure this path is correct */
   background-size: cover; /* Cover the entire area */
   background-position: center; /* Center the image */
+  height: 160vh;
 }
 </style>
