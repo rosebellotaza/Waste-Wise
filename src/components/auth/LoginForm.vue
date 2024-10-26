@@ -12,7 +12,7 @@ const router = useRouter()
 const formDataDefault = {
   email: '',
   password: '',
-  role: '', // Add role to form data
+  // role: '', // Add role to form data
 }
 const formData = ref({
   ...formDataDefault,

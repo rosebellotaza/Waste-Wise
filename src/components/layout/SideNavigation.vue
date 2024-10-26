@@ -20,7 +20,7 @@ watch(props, () => {
     v-model="isDrawerVisible"
     :temporary="mobile"
     :permanent="!mobile"
-    width="325"
+    width="300"
   >
     <v-list density="compact" nav     color="green-darken-4"
     >

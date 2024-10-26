@@ -38,7 +38,8 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
       data: {
         firstname:formData.value.firstname,
         lastname: formData.value.lastname,
-        // is_admin:true
+        // is_admin:true,
+        // role: 'Collector'//if role based
       }
     }
   })
@@ -53,7 +54,7 @@ else if (data) {
   formAction.value.formSuccessMessage = 'Successfully Registered Account!'
   //Add here more actions if you want
   // refVForm.value?.reset()
-  router.replace('/register')
+  // router.replace('/register')
 }
 
 refVForm.value?.reset()
