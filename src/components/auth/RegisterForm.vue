@@ -38,7 +38,7 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
       data: {
         firstname:formData.value.firstname,
         lastname: formData.value.lastname,
-        // is_admin:true,
+        is_admin:false,
         // role: 'Collector'//if role based
       }
     }

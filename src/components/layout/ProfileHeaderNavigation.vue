@@ -1,5 +1,5 @@
 <script setup>
-import { supabase, formActionDefault } from '@/utils/supabase'
+import { supabase, formActionDefault, getUserInformation } from '@/utils/supabase'
 import { getAvatarText } from '@/utils/helpers'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
@@ -11,7 +11,7 @@ const router = useRouter()
 
 // Load Variables
 const formAction = ref({
-  ...formActionDefault
+  ...formActionDefault,
 })
 
 // Logout Functionality
@@ -31,6 +31,15 @@ const onLogout = async () => {
   authStore.$reset()
   // Redirect to homepage
   router.replace('/')
+
+  //Getting User Information Functionality
+  // const getUser = async () => {
+  //   const metadata = await getUserInformation()
+
+  //   userData.value.email = metadata.email
+  //   userData.value.fullname = metadata.firstname + ' ' + metadata.lastname
+  //   userData.value.initials = getAvatarText(userData.value.fullname)
+  // }
 }
 </script>
 
@@ -48,7 +57,13 @@ const onLogout = async () => {
 
         <v-avatar v-else color="green-darken-3" size="large">
           <span class="text-h5">
-            {{ getAvatarText(authStore.userData.firstname + ' ' + authStore.userData.lastname) }}
+            {{
+              getAvatarText(
+                authStore.userData.firstname +
+                  ' ' +
+                  authStore.userData.lastname,
+              )
+            }}
           </span>
         </v-avatar>
       </v-btn>
@@ -59,7 +74,9 @@ const onLogout = async () => {
         <v-list>
           <v-list-item
             :subtitle="authStore.userData.email"
-            :title="authStore.userData.firstname + ' ' + authStore.userData.lastname"
+            :title="
+              authStore.userData.firstname + ' ' + authStore.userData.lastname
+            "
           >
             <template #prepend>
               <v-avatar
@@ -73,7 +90,11 @@ const onLogout = async () => {
               <v-avatar v-else color="green-darken-3" size="large">
                 <span class="text-h5">
                   {{
-                    getAvatarText(authStore.userData.firstname + ' ' + authStore.userData.lastname)
+                    getAvatarText(
+                      authStore.userData.firstname +
+                        ' ' +
+                        authStore.userData.lastname,
+                    )
                   }}
                 </span>
               </v-avatar>
