@@ -44,7 +44,7 @@ const onSubmit = async () => {
     if (formData.value.role === 'User') {
       router.replace('/dashboard')
     } else if (formData.value.role === 'Collector') {
-      router.replace('/collector-dashboard') // Redirect to collector dashboard
+      router.replace('/collector/dashboard') // Redirect to collector dashboard
     }
   }
 

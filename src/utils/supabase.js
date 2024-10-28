@@ -22,3 +22,13 @@ export const isAuthenticated = async () => {
   
     return !!data.session
   }
+
+  //Retrive user information
+  export const getUserInformation = async () => {
+    const {
+      data: {
+        user: {user_metadata}
+      }
+    } = await supabase.auth.getUser()
+    return user_metadata
+  }

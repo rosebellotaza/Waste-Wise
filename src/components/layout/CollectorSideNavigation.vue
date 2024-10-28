@@ -30,43 +30,22 @@ watch(props, () => {
       <v-list-item
         prepend-icon="mdi-view-dashboard"
         title="Dashboard"
-        to="/dashboard"
+        to="/collector/dashboard"
       ></v-list-item>
-
-      <v-divider></v-divider>
-
 
       <v-list-item
         prepend-icon="mdi-information"
-        title="About Us"
-        to="/about/us"
-      ></v-list-item>
-
-      <v-list-item
-        prepend-icon="mdi-calendar-month"
-        title="Appointment"
-        to="/appointment"
-      ></v-list-item>
-
-      <v-list-item
-        prepend-icon="mdi-help-box-multiple"
-        title="Guide"
-        to="/guide"
-      ></v-list-item>
-
-      <v-list-item
-        prepend-icon="mdi-contacts"
-        title="Contact"
-        to="/contact"
+        title="Users Information"
+        to="/users/information"
       ></v-list-item>
 
       <v-divider></v-divider>
 
-      <v-list-item
+      <!-- <v-list-item
         prepend-icon="mdi-wrench"
         title="Account Settings"
         to="/account/settings"
-      ></v-list-item>
+      ></v-list-item> -->
 
       <v-divider></v-divider>
     </v-list>

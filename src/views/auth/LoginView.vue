@@ -72,6 +72,6 @@ const { mobile } = useDisplay()
   background-image: url('/images/bground.webp'); /* Adjust the path as needed */
   background-size: cover; /* Cover the entire area */
   background-position: center; /* Center the image */
-  height: 130vh;
+  height: 150vh;
 }
 </style>
