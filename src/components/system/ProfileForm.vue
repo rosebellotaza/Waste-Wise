@@ -56,28 +56,32 @@ const onFormSubmit = () => {
   <AlertNotification
     :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMessage"
-  ></AlertNotification>
+  />
 
-  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
-    <v-row>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="user-update-form pa-6 rounded-lg elevation-3 mx-auto my-8">
+    <v-row class="text-center">
       <v-col cols="12" md="4">
         <v-text-field
           v-model="formData.firstname"
-          label="Firstname"
+          label="First Name"
           :rules="[requiredValidator]"
-        ></v-text-field>
+          outlined
+          dense
+        />
       </v-col>
 
       <v-col cols="12" md="4">
-        <v-text-field v-model="formData.middlename" label="Middlename"></v-text-field>
+        <v-text-field v-model="formData.middlename" label="Middle Name" outlined dense />
       </v-col>
 
       <v-col cols="12" md="4">
         <v-text-field
           v-model="formData.lastname"
-          label="Lastname"
+          label="Last Name"
           :rules="[requiredValidator]"
-        ></v-text-field>
+          outlined
+          dense
+        />
       </v-col>
 
       <v-col cols="12" md="6">
@@ -87,7 +91,9 @@ const onFormSubmit = () => {
           v-model="formData.email"
           label="Email"
           prepend-inner-icon="mdi-email-outline"
-        ></v-text-field>
+          outlined
+          dense
+        />
       </v-col>
 
       <v-col cols="12" md="6">
@@ -97,19 +103,39 @@ const onFormSubmit = () => {
           prepend-inner-icon="mdi-phone"
           prefix="+63"
           :rules="[requiredValidator, integerValidator]"
-        ></v-text-field>
+          outlined
+          dense
+        />
       </v-col>
     </v-row>
 
     <v-btn
-      class="mt-2"
       type="submit"
-      color="green-darken-4"
+      class="update-button mt-4 py-3 px-8 text-uppercase font-weight-bold rounded-pill"
+      color="sucess"
       prepend-icon="mdi-account-box-edit-outline"
       :disabled="formAction.formProcess"
       :loading="formAction.formProcess"
     >
-      Update Information
+      Save Changes
     </v-btn>
   </v-form>
 </template>
+
+<style scoped>
+.user-update-form {
+  max-width: 750px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.update-button {
+  background-color: #4CAF50;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #43a047;
+}
+</style>

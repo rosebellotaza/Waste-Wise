@@ -2,9 +2,11 @@
 import AppLayout from '@/components/layout/AppLayout.vue'
 import SideNavigation from '@/components/layout/SideNavigation.vue'
 import { ref } from 'vue'
+import emailjs from 'emailjs-com' // Import EmailJS library
 
 const isDrawerVisible = ref(true)
 
+// Form data
 const form = ref({
   name: '',
   email: '',
@@ -12,6 +14,49 @@ const form = ref({
   subject: '',
   message: ''
 })
+
+// Feedback messages
+const formAction = ref({
+  formProcess: false,
+  formSuccessMessage: '',
+  formErrorMessage: ''
+})
+
+// EmailJS send email function
+const sendEmail = async () => {
+  formAction.value.formProcess = true
+
+  try {
+    const response = await emailjs.send(
+      'WASTEWISE',       // Replace with your Service ID
+      'WASTEWISE',      // Replace with your Template ID
+      {
+        from_name: form.value.name,
+        from_email: form.value.email,
+        phone: form.value.phone,
+        subject: form.value.subject,
+        message: form.value.message,
+        to_email: 'rosebellaaa88@gmail.com'  // Optional: replace with the recipient email if dynamic
+      },
+      'ROSEBELLOTAZA'           // Replace with your User ID
+    )
+
+    formAction.value.formSuccessMessage = 'Message sent successfully!'
+    form.value = { name: '', email: '', phone: '', subject: '', message: '' } // Reset form fields
+  } catch (error) {
+    formAction.value.formErrorMessage = 'Failed to send message. Please try again later.'
+  }
+
+  formAction.value.formProcess = false
+}
+
+const onFormSubmit = () => {
+  if (form.value.name && form.value.email && form.value.message) {
+    sendEmail()
+  } else {
+    formAction.value.formErrorMessage = 'Please fill in all required fields.'
+  }
+}
 </script>
 
 <template>
@@ -29,13 +74,13 @@ const form = ref({
         <v-card class="mb-5">
           <template #title>
             <span class="text-h6 font-weight-bold">
-              <v-breadcrumbs :items="['System', 'Contact Us']"></v-breadcrumbs>
+              <v-breadcrumbs :items="['System', 'Contact Us']" color="green-darken-3"></v-breadcrumbs>
             </span>
           </template>
         </v-card>
 
         <!-- Title Card -->
-        <v-card class="my-5" color="green-lighten-5" outlined>
+        <v-card class="my-5 border-green" color="green-lighten-5" outlined>
           <br>
           <p class="text-center font-weight-bold text-green-darken-1">GET 24/7 SUPPORT</p>
           <v-card-title class="text-h5 font-weight-bold text-center">CONTACT US</v-card-title>
@@ -46,12 +91,20 @@ const form = ref({
         <v-row class="my-5">
           <!-- Left Side: Contact Form -->
           <v-col cols="12" md="8">
-            <v-card class="pa-5" outlined>
+            <v-card class="pa-5 border-green" outlined>
               <h2 class="text-h5 font-weight-bold text-green-darken-1">Have you any question?</h2>
               <p>Feel free to contact us and leave a message! Waste Wise will keep in touch with you.</p>
 
+              <!-- Success/Error Notification -->
+              <v-alert v-if="formAction.formSuccessMessage" type="success" class="mb-4">
+                {{ formAction.formSuccessMessage }}
+              </v-alert>
+              <v-alert v-if="formAction.formErrorMessage" type="error" class="mb-4">
+                {{ formAction.formErrorMessage }}
+              </v-alert>
+
               <!-- Form -->
-              <v-form>
+              <v-form @submit.prevent="onFormSubmit">
                 <v-text-field
                   v-model="form.name"
                   label="Name"
@@ -59,6 +112,7 @@ const form = ref({
                   dense
                   class="my-4"
                   placeholder="Enter your name"
+                  required
                 >
                   <template #prepend-inner>
                     <v-icon color="green-darken-4">mdi-account</v-icon>
@@ -72,6 +126,7 @@ const form = ref({
                   dense
                   class="my-4"
                   placeholder="Enter your email"
+                  required
                 >
                   <template #prepend-inner>
                     <v-icon color="green-darken-4">mdi-email</v-icon>
@@ -112,13 +167,14 @@ const form = ref({
                   rows="4"
                   class="my-4"
                   placeholder="Enter your message"
+                  required
                 >
                   <template #prepend-inner>
                     <v-icon color="green-darken-4">mdi-comment-text-outline</v-icon>
                   </template>
                 </v-textarea>
 
-                <v-btn color="green-darken-4" class="mt-4" outlined>
+                <v-btn :loading="formAction.formProcess" color="green-darken-4" class="mt-4 submit" outlined type="submit">
                   SUBMIT
                 </v-btn>
               </v-form>
@@ -127,7 +183,7 @@ const form = ref({
 
           <!-- Right Side: Shop Information -->
           <v-col cols="12" md="4">
-            <v-card class="pa-5" outlined>
+            <v-card class="pa-5 border-green" outlined>
               <h2 class="text-h6 font-weight-bold">
                 <v-icon color="green darken-4" class="mr-2">mdi-map-marker</v-icon>
                 Shop Address
@@ -152,12 +208,15 @@ const form = ref({
           </v-col>
         </v-row>
       </v-container>
+
+      <v-footer :color="theme === 'light' ? 'green-darken-1' : 'green-darken-4'" elevation="24" border app>
+        <div :class="mobile ? 'w-100 text-center' : ''">
+          Copyright © 2024 - Waste Wise | All Rights Reserved
+        </div>
+      </v-footer>
     </template>
   </AppLayout>
 </template>
-
-
-
 
 <style scoped>
 /* Centered heading animation */
@@ -191,5 +250,12 @@ h2 {
     transform: translateX(0);
   }
 }
-</style>
 
+.border-green {
+    border: 2px solid #4B8B3B;
+}
+
+.submit {
+  margin-left: 620px;
+}
+</style>

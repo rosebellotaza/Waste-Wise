@@ -27,16 +27,16 @@ const features = [
     <template #content>
       <!-- Main content with matching animations -->
       <v-container class="dashboard-animation" >
-        <v-card class="dashboard-animation-card mb-5" >
+        <v-card class="dashboard-animation-card mb-5 " >
           <template #title>
             <span class="text-h6 font-weight-bold">
-              <v-breadcrumbs :items="['System', 'About Us']"></v-breadcrumbs>
+              <v-breadcrumbs :items="['System', 'About Us']" color="green-darken-3"></v-breadcrumbs>
             </span>
           </template>
         </v-card>
 
         <!-- About Us Header -->
-        <v-card class="my-5 fade-in" color="green-lighten-5" outlined>
+        <v-card class="my-5 fade-in border-green" color="green-lighten-5" outlined>
           <br>
           <p class="text-center font-weight-bold text-green-darken-1">WE MANAGE WASTE</p>
           <v-card-title class="text-h5 font-weight-bold text-center">ABOUT US</v-card-title>
@@ -63,55 +63,58 @@ const features = [
         </v-row>
 
         <!-- Our Team Section -->
-              <v-container class="text-center my-10">
-        <h2 class="text-h4 font-weight-bold text-green-darken-2 mb-8">Our Team</h2>
-        <v-row justify="center" class="team-row">
-          <v-col cols="12" md="4" class="team-member fade-in-up">
-            <v-card outlined>
-              <v-avatar size="150" class="mx-auto my-4">
-                <img src="/images/team2.jpg" alt="Girly Jane Notarion" class="avatar-image" />
-              </v-avatar>
-              <div class="font-weight-bold text-h6">Girly Jane Notarion</div>
-              <div class="mb-4 text-body-2">System Analyst</div>
-              <br>
-              <v-row justify="center" class="social-icons">
-                <v-btn icon href="https://facebook.com/your-link" target="_blank">
-                  <v-icon color="green">mdi-facebook</v-icon>
-                </v-btn>
-                <v-btn icon href="https://twitter.com/your-link" target="_blank">
-                  <v-icon color="green">mdi-twitter</v-icon>
-                </v-btn>
-                <v-btn icon href="https://instagram.com/your-link" target="_blank">
-                  <v-icon color="green">mdi-instagram</v-icon>
-                </v-btn>
-              </v-row>
-              <br>
-            </v-card>
-          </v-col>
-          <v-col cols="12" md="4" class="team-member fade-in-up">
-            <v-card outlined>
-              <v-avatar size="150" class="mx-auto my-4">
-                <img src="/images/team1.jpg" alt="Rosebell Narie Otaza" class="avatar-image" />
-              </v-avatar>
-              <div class="font-weight-bold text-h6">Rosebell Narie Otaza</div>
-              <div class="mb-4 text-body-2">Frontend Developer</div>
-              <br>
-              <v-row justify="center" class="social-icons">
-                <v-btn icon href="https://facebook.com/your-link" target="_blank">
-                  <v-icon color="green">mdi-facebook</v-icon>
-                </v-btn>
-                <v-btn icon href="https://twitter.com/your-link" target="_blank">
-                  <v-icon color="green">mdi-twitter</v-icon>
-                </v-btn>
-                <v-btn icon href="https://instagram.com/your-link" target="_blank">
-                  <v-icon color="green">mdi-instagram</v-icon>
-                </v-btn>
-              </v-row>
-              <br>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
+        <v-container class="text-center my-10">
+          <h2 class="text-h4 font-weight-bold text-green-darken-2 mb-5">Our Team</h2>
+          <p class="text-center">We are dedicated and passionate team of developers commited to creating innovative solutions.<br> Our diverse skills and collaborative approach allow us to tackle complex challenges and deliver exceptional results.</p>
+          <br>
+          <v-row justify="center" class="team-row">
+            <v-col cols="12" md="4" class="team-member fade-in-up">
+              <v-card outlined class="border-green">
+                <v-avatar size="150" class="mx-auto my-4">
+                  <img src="/images/team2.jpg" alt="Girly Jane Notarion" class="avatar-image" />
+                </v-avatar>
+                <div class="font-weight-bold text-h6 text-green-darken-3">Girly Jane Notarion</div>
+                <div class="mb-4 text-body-2">System Analyst</div>
+                <br>
+                <v-row justify="center" class="social-icons">
+                  <v-btn icon href="https://www.facebook.com/jane.notarion" target="_blank">
+                    <v-icon color="green">mdi-facebook</v-icon>
+                  </v-btn>
+                  <v-btn icon href="https://wa.me/your-number" target="_blank">
+                    <v-icon color="green">mdi-whatsapp</v-icon>
+                  </v-btn>
+                  <v-btn icon href="https://github.com/your-link" target="_blank">
+                    <v-icon color="green">mdi-github</v-icon>
+                  </v-btn>
+                </v-row>
+                <br>
+              </v-card>
+            </v-col>
+            <v-col cols="12" md="4" class="team-member fade-in-up">
+              <v-card outlined class="border-green">
+                <v-avatar size="150" class="mx-auto my-4">
+                  <img src="/images/team1.jpg" alt="Rosebell Narie Otaza" class="avatar-image" />
+                </v-avatar>
+                <div class="font-weight-bold text-h6 text-green-darken-3">Rosebell Narie Otaza</div>
+                <div class="mb-4 text-body-2">Frontend Developer</div>
+                <br>
+                <v-row justify="center" class="social-icons">
+                  <v-btn icon href="https://www.facebook.com/rotaza08/" target="_blank">
+                    <v-icon color="green">mdi-facebook</v-icon>
+                  </v-btn>
+                  <v-btn icon href="https://wa.me/+639912143127" target="_blank">
+                    <v-icon color="green">mdi-whatsapp</v-icon>
+                  </v-btn>
+                  <v-btn icon href="https://github.com/rosebellotaza" target="_blank">
+                    <v-icon color="green">mdi-github</v-icon>
+                  </v-btn>
+                </v-row>
+                <br>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+
 
       </v-container>
     </template>
@@ -187,5 +190,7 @@ const features = [
   border-radius: 50%; /* Ensures the image is circular inside the avatar */
 }
 
-
+.border-green {
+    border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+  }
 </style>

@@ -12,7 +12,6 @@ const router = useRouter()
 const formDataDefault = {
   email: '',
   password: '',
-  // role: '', // Add role to form data
 }
 const formData = ref({
   ...formDataDefault,
@@ -23,35 +22,49 @@ const formAction = ref({
 const isPasswordVisible = ref(false)
 const refVForm = ref()
 
+// Updated onSubmit function with role-based logic
 const onSubmit = async () => {
   // Reset Form Action utils; Turn on processing at the same time
-  formAction.value = { ...formActionDefault, formProcess: true }
+  formAction.value = { ...formActionDefault, formProcess: true };
 
-  // You can include the role in your authentication logic if needed
+  // Sign in the user with Supabase authentication
   const { data, error } = await supabase.auth.signInWithPassword({
     email: formData.value.email,
     password: formData.value.password,
-  })
+  });
 
   if (error) {
     // Add Error Message and Status Code
-    formAction.value.formErrorMessage = error.message
-    formAction.value.formStatus = error.status
+    formAction.value.formErrorMessage = error.message;
+    formAction.value.formStatus = error.status;
   } else if (data) {
-    // Add Success Message
-    formAction.value.formSuccessMessage = 'Successfully Logged In.'
-    // You can handle role-specific logic here
+    // Retrieve user metadata to check if the user is an admin
+    const userMetadata = data.user.user_metadata;
+    const isAdmin = userMetadata.is_admin;
+
+    // Check if the selected role matches the user's is_admin status
+    if ((formData.value.role === 'Collector' && !isAdmin) || 
+        (formData.value.role === 'User' && isAdmin)) {
+      formAction.value.formErrorMessage = 'Invalid role selection for your account type.';
+      formAction.value.formProcess = false;
+      return;
+    }
+
+    // Set Success Message
+    formAction.value.formSuccessMessage = 'Successfully Logged In.';
+
+    // Redirect based on role
     if (formData.value.role === 'User') {
-      router.replace('/dashboard')
+      router.replace('/dashboard');
     } else if (formData.value.role === 'Collector') {
-      router.replace('/collector/dashboard') // Redirect to collector dashboard
+      router.replace('/collector/dashboard');
     }
   }
 
   // Reset Form
-  refVForm.value?.reset()
+  refVForm.value?.reset();
   // Turn off processing
-  formAction.value.formProcess = false
+  formAction.value.formProcess = false;
 }
 
 const onFormSubmit = () => {
@@ -60,6 +73,7 @@ const onFormSubmit = () => {
   })
 }
 </script>
+
 
 <template>
   <AlertNotification
