@@ -101,25 +101,35 @@ const onLogout = async () => {
             </template>
           </v-list-item>
         </v-list>
-
-        <v-divider class="my-3"></v-divider>
-
+<!-- 
         <v-btn prepend-icon="mdi-wrench" variant="plain" to="/account/settings">
           Account Settings
-        </v-btn>
+        </v-btn> -->
 
         <v-divider class="my-3"></v-divider>
 
         <v-btn
-          prepend-icon="mdi-logout"
-          variant="plain"
-          @click="onLogout"
-          :loading="formAction.formProcess"
-          :disabled="formAction.formProcess"
-        >
-          Logout
-        </v-btn>
+      prepend-icon="mdi-logout"
+      color="green-darken-2"
+      class="text-white"
+      elevation="2"
+      rounded
+      block
+      @click="onLogout"
+      :loading="formAction.formProcess"
+      :disabled="formAction.formProcess"
+    >
+      Logout
+    </v-btn>
+
       </v-card-text>
     </v-card>
   </v-menu>
 </template>
+
+<style scoped>
+.border-green {
+    border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+  }
+
+</style>

@@ -33,13 +33,13 @@ function submitForm() {
         <v-card class="mb-5 fade-in" >
           <template #title>
             <span class="text-h6 font-weight-bold">
-              <v-breadcrumbs :items="['System', 'Appoint Here']"></v-breadcrumbs>
+              <v-breadcrumbs :items="['System', 'Appoint Here'] " color="green-darken-3"></v-breadcrumbs>
             </span>
           </template>
         </v-card>
 
         <!-- Title Section -->
-        <v-card class="my-5 fade-in" color="green-lighten-5" outlined>
+        <v-card class="my-5 fade-in border-green" color="green-lighten-5" outlined>
           <br>
           <p class="text-center font-weight-bold text-green-darken-1">WASTE WISE MANAGEMENT</p>
           <v-card-title class="text-h5 font-weight-bold text-center">APPOINT NOW</v-card-title>
@@ -47,7 +47,7 @@ function submitForm() {
         </v-card>
 
         <!-- Appointment Form -->
-        <v-card class="my-5 p-5 fade-in" outlined>
+        <v-card class="my-5 p-5 fade-in border-green" outlined>
           <v-card-title class="text-h5 font-weight-bold text-green-darken-1 text-center">
             <br>
             Pick Up Schedule
@@ -169,4 +169,8 @@ function submitForm() {
 .green-icon .v-input__prepend-inner .v-icon {
   color: #1B5E20; /* green darken-4 */
 }
+
+.border-green {
+    border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+  }
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import { isAuthenticated } from '@/utils/supabase'
 import AppLayout from '@/components/layout/AppLayout.vue'
-import SideNavigation from '@/components/layout/SideNavigation.vue'
+// import SideNavigation from '@/components/layout/SideNavigation.vue'
 import { onMounted, ref } from 'vue'
 
 // Load Variables
@@ -14,9 +14,9 @@ const getLoggedStatus = async () => {
 }
 
 // Load Functions during component rendering
-onMounted(() => {
-  getLoggedStatus()
-})
+// onMounted(() => {
+//   getLoggedStatus()
+// })
 </script>
 
 <template>
@@ -24,9 +24,9 @@ onMounted(() => {
     :is-with-app-bar-nav-icon="isLoggedIn"
     @is-drawer-visible="isDrawerVisible = !isDrawerVisible"
   >
-    <template #navigation v-if="isLoggedIn">
+    <!-- <template #navigation v-if="isLoggedIn">
       <SideNavigation :is-drawer-visible="isDrawerVisible"></SideNavigation>
-    </template>
+    </template> -->
 
     <template #content>
       <v-container>
@@ -39,7 +39,7 @@ onMounted(() => {
               You dont have permission to access this page.
             </p>
 
-            <v-btn class="mt-2" color="light-green-darken-4" prepend-icon="mdi-home" to="/">
+            <v-btn class="mt-2" color="light-green-darken-4" prepend-icon="mdi-home" to="/login">
               Back to {{ isLoggedIn ? 'Dashboard' : 'Homepage' }}
             </v-btn>
           </v-col>

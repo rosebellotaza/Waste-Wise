@@ -12,7 +12,8 @@ import GuideView from '@/views/system/GuideView.vue'
 import ContactView from '@/views/system/ContactView.vue'
 import ForbiddenView from '@/views/system/ForbiddenView.vue'
 import CollectorDashboardView from '@/views/system/CollectorDashboardView.vue'
-import UsersInformation from '@/views/system/UsersInformation.vue'
+import CollectorAccountSettingsView from '@/views/system/CollectorAccountSettingsView.vue'
+import UsersInformationView from '@/views/system/UsersInformationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -83,7 +84,12 @@ const router = createRouter({
     {
       path: '/users/information',
       name: 'usersinformation',
-      component: UsersInformation,
+      component: UsersInformationView,
+    },
+    {
+      path: '/collector/settings',
+      name: 'collectorsettings',
+      component: CollectorAccountSettingsView,
     },
   ],
 })

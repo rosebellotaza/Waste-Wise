@@ -9,7 +9,7 @@ export const useAuthUserStore = defineStore('authUser', () => {
   // Getters
   // Computed Properties; Use for getting the state but not modifying its reactive state
   const userRole = computed(() => {
-    return userData.value?.is_admin ? 'Administrator' : 'User'
+    return userData.value?.is_admin ? 'Collector' : 'User'
   })
 
   // Reset State Action

@@ -57,10 +57,10 @@ const onFormSubmit = () => {
   <AlertNotification
     :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMessage"
-  ></AlertNotification>
+  />
 
-  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
-    <v-row>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="password-change-form pa-6 rounded-lg elevation-3 mx-auto my-8">
+    <v-row class="text-center">
       <v-col cols="12" md="6">
         <v-text-field
           v-model="formData.password"
@@ -70,28 +70,29 @@ const onFormSubmit = () => {
           :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
           @click:append-inner="isPasswordVisible = !isPasswordVisible"
           :rules="[requiredValidator, passwordValidator]"
-        ></v-text-field>
+          outlined
+          dense
+        />
       </v-col>
 
       <v-col cols="12" md="6">
         <v-text-field
           v-model="formData.password_confirmation"
-          label="Password Confirmation"
+          label="Confirm Password"
           :type="isConfirmPasswordVisible ? 'text' : 'password'"
           :append-inner-icon="isConfirmPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
           @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
-          :rules="[
-            requiredValidator,
-            confirmedValidator(formData.password_confirmation, formData.password)
-          ]"
-        ></v-text-field>
+          :rules="[requiredValidator, confirmedValidator(formData.password_confirmation, formData.password)]"
+          outlined
+          dense
+        />
       </v-col>
     </v-row>
 
     <v-btn
-      class="mt-2"
       type="submit"
-      color="green-darken-4"
+      class="change-password-button mt-4 py-3 px-8 text-uppercase font-weight-bold rounded-pill"
+      color="sucess"
       prepend-icon="mdi-key"
       :disabled="formAction.formProcess"
       :loading="formAction.formProcess"
@@ -100,3 +101,21 @@ const onFormSubmit = () => {
     </v-btn>
   </v-form>
 </template>
+
+<style scoped>
+.password-change-form {
+  max-width: 650px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.change-password-button {
+  background-color: #4CAF50;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.change-password-button:hover {
+  background-color: #43a047;
+}
+</style>

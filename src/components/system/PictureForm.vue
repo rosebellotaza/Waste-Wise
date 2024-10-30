@@ -75,48 +75,83 @@ const onFormSubmit = () => {
   <AlertNotification
     :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMessage"
-  ></AlertNotification>
+  />
 
-  <v-form class="mt-5" ref="refVForm" @submit.prevent="onFormSubmit">
-    <v-row>
-      <v-col cols="12" md="5">
-        <v-img
-          width="55%"
-          class="mx-auto rounded-circle"
-          color="green-darken-4"
-          aspect-ratio="1"
-          :src="imgPreview"
-          alt="Profile Picture Preview"
-          cover
-        >
-        </v-img>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="profile-update-form mx-auto my-8 pa-5 rounded-lg elevation-3">
+    <v-row align="center" class="text-center mb-8">
+      <v-col cols="12" md="5" class="d-flex justify-center">
+        <v-hover v-slot:default="{ isHovering }">
+          <v-img
+            class="profile-image rounded-circle shadow transition"
+            :class="{ 'scale-hover': isHovering }"
+            width="150"
+            height="200"
+            :src="imgPreview || '/images/img-profile.png'"
+            alt="Profile Picture Preview"
+            color="grey-lighten-4"
+            cover
+          >
+            <template v-slot:placeholder>
+              <v-icon color="grey-darken-1" size="64">mdi-account-circle</v-icon>
+            </template>
+          </v-img>
+        </v-hover>
       </v-col>
 
-      <v-col cols="12" md="7">
+      <v-col cols="12" md="7" class="text-md-left">
         <v-file-input
-          class="mt-5"
+          class="mt-4 mb-4"
           :rules="[requiredValidator, imageValidator]"
           accept="image/png, image/jpeg, image/bmp"
-          label="Browse Profile Picture"
-          placeholder="Browse Profile Picture"
+          label="Select Profile Picture"
+          placeholder="Upload your photo"
           prepend-icon="mdi-camera"
           show-size
-          chips
+          rounded
+          dense
           @change="onPreview"
           @click:clear="onPreviewReset"
-        ></v-file-input>
+        />
 
         <v-btn
-          class="mt-2"
           type="submit"
-          color="green-darken-4"
-          prepend-icon="mdi-image-edit"
+          class="update-button mt-4 py-3 px-8 text-uppercase font-weight-bold rounded-pill"
+          color="success"
+          prepend-icon="mdi-image-edit-outline"
           :disabled="formAction.formProcess"
           :loading="formAction.formProcess"
+          style="margin-left: 0;"
         >
-          Update Picture
+          Save Changes
         </v-btn>
       </v-col>
     </v-row>
   </v-form>
 </template>
+
+<style scoped>
+.profile-update-form {
+  max-width: 700px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+  transition: transform 0.3s ease;
+}
+
+.scale-hover {
+  transform: scale(1.05);
+}
+
+.update-button {
+  background-color: #4CAF50;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #43a047;
+}
+</style>
+
