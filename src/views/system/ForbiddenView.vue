@@ -1,22 +1,28 @@
 <script setup>
-import { isAuthenticated } from '@/utils/supabase'
+import { isAuthenticated, getUserInformation } from '@/utils/supabase'
 import AppLayout from '@/components/layout/AppLayout.vue'
-// import SideNavigation from '@/components/layout/SideNavigation.vue'
 import { onMounted, ref } from 'vue'
 
 // Load Variables
 const isLoggedIn = ref(false)
+const isAdmin = ref(false)  // Variable to check if user is admin
 const isDrawerVisible = ref(true)
 
-// Get Authentication status from supabase
+// Get Authentication status and role from supabase
 const getLoggedStatus = async () => {
   isLoggedIn.value = await isAuthenticated()
+  
+  // Retrieve user role
+  if (isLoggedIn.value) {
+    const userInfo = await getUserInformation()
+    isAdmin.value = userInfo.is_admin
+  }
 }
 
-// Load Functions during component rendering
-// onMounted(() => {
-//   getLoggedStatus()
-// })
+// Load functions during component rendering
+onMounted(() => {
+  getLoggedStatus()
+})
 </script>
 
 <template>
@@ -24,10 +30,6 @@ const getLoggedStatus = async () => {
     :is-with-app-bar-nav-icon="isLoggedIn"
     @is-drawer-visible="isDrawerVisible = !isDrawerVisible"
   >
-    <!-- <template #navigation v-if="isLoggedIn">
-      <SideNavigation :is-drawer-visible="isDrawerVisible"></SideNavigation>
-    </template> -->
-
     <template #content>
       <v-container>
         <v-row>
@@ -36,11 +38,16 @@ const getLoggedStatus = async () => {
             <h2 class="text-h2 font-weight-black mb-2">Forbidden</h2>
 
             <p class="text-subtitle-1 font-weight-bold mb-4">
-              You dont have permission to access this page.
+              You don’t have permission to access this page.
             </p>
 
-            <v-btn class="mt-2" color="light-green-darken-4" prepend-icon="mdi-home" to="/login">
-              Back to {{ isLoggedIn ? 'Dashboard' : 'Homepage' }}
+            <v-btn
+              class="mt-2"
+              color="light-green-darken-4"
+              prepend-icon="mdi-home"
+              :to="isAdmin ? '/collector/dashboard' : '/dashboard'"
+            >
+              Back to {{ isLoggedIn ? (isAdmin ? 'Collector Dashboard' : 'User Dashboard') : 'Homepage' }}
             </v-btn>
           </v-col>
         </v-row>

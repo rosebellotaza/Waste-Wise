@@ -38,17 +38,19 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
+      meta: { requiresAuth: true, requiresUser: true },
     },
     {
       path: '/about/us',
       name: 'aboutus',
       component: AboutusView,
+      meta: { requiresAuth: true, requiresUser: true },
     },
     {
       path: '/account/settings',
       name: 'accountsettings',
       component: AccountSettingsView,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, requiresUser: true },
     },
     {
       path: '/user/roles',
@@ -60,16 +62,19 @@ const router = createRouter({
       path: '/appointment',
       name: 'appointment',
       component: AppointmentView,
+      meta: { requiresAuth: true, requiresUser: true },
     },
     {
       path: '/guide',
       name: 'guide',
       component: GuideView,
+      meta: { requiresAuth: true, requiresUser: true },
     },
     {
       path: '/contact',
       name: 'contact',
       component: ContactView,
+      meta: { requiresAuth: true, requiresUser: true },
     },
     {
       path: '/forbidden',
@@ -80,16 +85,19 @@ const router = createRouter({
       path: '/collector/dashboard',
       name: 'collectordashboard',
       component: CollectorDashboardView,
+      meta: { requiresAuth: true, requiresAdmin: true },
     },
     {
       path: '/users/information',
       name: 'usersinformation',
       component: UsersInformationView,
+      meta: { requiresAuth: true, requiresAdmin: true },
     },
     {
       path: '/collector/settings',
       name: 'collectorsettings',
       component: CollectorAccountSettingsView,
+      meta: { requiresAuth: true, requiresAdmin: true },
     },
   ],
 })
@@ -155,6 +163,11 @@ router.beforeEach(async to => {
     // if(!isCashier && to.meta.requiresCashier)) {
 
     // }
+
+     // Restrict admin access to user-only pages
+     if (isAdmin && to.meta.requiresUser) {
+      return { name: 'forbidden' }
+    }
   }
 })
 

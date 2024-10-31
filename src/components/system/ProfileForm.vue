@@ -11,7 +11,6 @@ const authStore = useAuthUserStore()
 // Load Variables
 const formDataDefault = {
   firstname: authStore.userData.firstname,
-  middlename: authStore.userData.middlename,
   lastname: authStore.userData.lastname,
   email: authStore.userData.email,
   phone: authStore.userData.phone
@@ -60,7 +59,7 @@ const onFormSubmit = () => {
 
   <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="user-update-form pa-6 rounded-lg elevation-3 mx-auto my-8">
     <v-row class="text-center">
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="6">
         <v-text-field
           v-model="formData.firstname"
           label="First Name"
@@ -69,12 +68,12 @@ const onFormSubmit = () => {
           dense
         />
       </v-col>
-
+<!-- 
       <v-col cols="12" md="4">
         <v-text-field v-model="formData.middlename" label="Middle Name" outlined dense />
-      </v-col>
+      </v-col> -->
 
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="6">
         <v-text-field
           v-model="formData.lastname"
           label="Last Name"
@@ -109,6 +108,13 @@ const onFormSubmit = () => {
       </v-col>
     </v-row>
 
+          <!-- Simple display button -->
+      <v-col cols="12" md="4">
+        <v-btn color="green darken-4" outlined>
+          Pin Location on Map
+        </v-btn>
+      </v-col>
+
     <v-btn
       type="submit"
       class="update-button mt-4 py-3 px-8 text-uppercase font-weight-bold rounded-pill"
@@ -123,6 +129,22 @@ const onFormSubmit = () => {
 </template>
 
 <style scoped>
+.user-update-form {
+  max-width: 750px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.update-button {
+  background-color: #4CAF50;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #43a047;
+}
+
 .user-update-form {
   max-width: 750px;
   background-color: #f9f9f9;

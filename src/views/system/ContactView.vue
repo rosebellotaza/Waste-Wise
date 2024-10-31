@@ -22,14 +22,20 @@ const formAction = ref({
   formErrorMessage: ''
 })
 
+// Email validation function
+const isValidEmail = (email) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+};
+
 // EmailJS send email function
 const sendEmail = async () => {
   formAction.value.formProcess = true
 
   try {
     const response = await emailjs.send(
-      'WASTEWISE',       // Replace with your Service ID
-      'WASTEWISE',      // Replace with your Template ID
+      'service_a2ub69m',       // Replace with your Service ID
+      'template_0a38e3t',      // Replace with your Template ID
       {
         from_name: form.value.name,
         from_email: form.value.email,
@@ -38,24 +44,38 @@ const sendEmail = async () => {
         message: form.value.message,
         to_email: 'rosebellaaa88@gmail.com'  // Optional: replace with the recipient email if dynamic
       },
-      'ROSEBELLOTAZA'           // Replace with your User ID
+      'niTQ_1ZoaHP_fVr20'           // Replace with your User ID
     )
 
     formAction.value.formSuccessMessage = 'Message sent successfully!'
     form.value = { name: '', email: '', phone: '', subject: '', message: '' } // Reset form fields
+
+    // Hide the success message after 5 seconds
+    setTimeout(() => {
+      formAction.value.formSuccessMessage = '';
+    }, 5000);
   } catch (error) {
-    formAction.value.formErrorMessage = 'Failed to send message. Please try again later.'
+    formAction.value.formErrorMessage = 'Failed to send message. Please try again later.';
+    console.error('EmailJS Error:', error); // Log error for debugging
   }
 
   formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
-  if (form.value.name && form.value.email && form.value.message) {
-    sendEmail()
-  } else {
-    formAction.value.formErrorMessage = 'Please fill in all required fields.'
+  formAction.value.formErrorMessage = ''; // Reset error message
+
+  if (!form.value.name || !form.value.email || !form.value.message) {
+    formAction.value.formErrorMessage = 'Please fill in all required fields.';
+    return;
   }
+  
+  if (!isValidEmail(form.value.email)) {
+    formAction.value.formErrorMessage = 'Please enter a valid email address.';
+    return;
+  }
+
+  sendEmail();
 }
 </script>
 
@@ -175,7 +195,8 @@ const onFormSubmit = () => {
                 </v-textarea>
 
                 <v-btn :loading="formAction.formProcess" color="green-darken-4" class="mt-4 submit" outlined type="submit">
-                  SUBMIT
+                  <template v-if="formAction.formProcess">Sending...</template>
+                  <template v-else>SUBMIT</template>
                 </v-btn>
               </v-form>
             </v-card>

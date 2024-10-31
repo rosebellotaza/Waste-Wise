@@ -5,24 +5,16 @@ import { ref } from 'vue'
 
 const isDrawerVisible = ref(true)
 
-// Define the steps for the user guide
-const steps = [
-{
-    title: 'Step 1: Set your Schedule',
-    icon: 'mdi-calendar-clock',
-    description: 'Log in to your account and go to schedule section.',
-  },
-  {
-    title: 'Step 2: Pin Your Location',
-    icon: 'mdi-map-marker-radius',
-    description: 'Use the integrated maps feature to pin your location for accurate pickup.',
-  },
-  {
-    title: 'Step 3: Collector will arrive',
-    icon: 'mdi-truck',
-    description: 'Relax and wait for the waste collector to arrive to collect your waste.',
-  },
+const collectionSchedule = [
+  { day: 'Monday', type: 'Biodegradable Waste', icon: 'mdi-leaf' },
+  { day: 'Tuesday', type: 'Non-Biodegradable Waste', icon: 'mdi-trash-can' },
+  { day: 'Wednesday', type: 'Recyclable Waste', icon: 'mdi-recycle' },
+  { day: 'Thursday', type: 'Electronic Waste', icon: 'mdi-desktop-classic' },
+  { day: 'Friday', type: 'Special Waste', icon: 'mdi-alert' },
+  { day: 'Saturday', type: 'Biodegradable & Non-Biodegradable', icon: 'mdi-leaf-maple' },
+  { day: 'Sunday', type: 'Biodegradable & Non-Biodegradable', icon: 'mdi-leaf-maple' }
 ]
+
 </script>
 
 <template>
@@ -51,41 +43,44 @@ const steps = [
           <br>
         </v-card>
 
-        <!-- User Guide Section -->
-        <v-card class="my-5 user-guide-card" outlined>
-          <br>
-          <v-card-title class="text-h4 font-weight-bold text-center text-green-darken-1">How Does It Work?</v-card-title>
-          <v-card-text>
-            <div class="guide-description">
-              <h4 class="text-center text-black">Follow these simple steps to effectively use the Waste Wise Management System.</h4>
-            </div>
-            <v-container>
-              <v-row>
-                <v-col v-for="(step, index) in steps" :key="index" cols="12" md="4" class="d-flex align-center justify-center">
-                  <v-card class="step-card">
-                    <v-card-title class="step-title text-center">{{ step.title }}</v-card-title>
-                    <v-card-text class="text-center">
-                      <v-icon class="step-icon">{{ step.icon }}</v-icon>
-                      <p>{{ step.description }}</p>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <br>
-          <br>
+        <!-- Waste Collection Schedule Calendar Section -->
+        <v-card class="calendar-card my-5 py-4 px-3 border-green" outlined>
+          <h2 class="text-center text-green-darken-1 mb-4">Weekly Waste Collection Schedule</h2>
+          <p class="text-center mt-2 mb-4">
+  Stay organized and environmentally conscious by following our weekly waste collection schedule.<br> Let’s work together for a cleaner and greener community!
+</p>
+          <v-row class="calendar-grid" dense>
+            <v-col
+              v-for="(day, index) in collectionSchedule"
+              :key="index"
+              class="calendar-cell"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="2"
+            >
+              <v-card color="green-lighten-4" class="calendar-day-card text-center">
+                <div class="day-header">
+                  <span class="day-name font-weight-bold">{{ day.day }}</span>
+                  <v-icon large class="day-icon">{{ day.icon }}</v-icon>
+                </div>
+                <p class="day-type">{{ day.type }}</p>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-card>
+
         <br>
         <h1 class="text-center text-green-darken-1">Frequently Asked Questions</h1>
         <p class="text-center">Find answers to the most common questions about Waste Wise, <br> your go-to waste management solution.</p>
         <br>
+
         <!-- FAQ Section -->
         <transition name="fade">
           <v-expansion-panels class="faq" accordion>
             <!-- FAQ Item 1 -->
             <v-expansion-panel>
-              <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+              <v-expansion-panel-title>
                 What is Waste Wise?
               </v-expansion-panel-title>
               <v-expansion-panel-text>
@@ -95,7 +90,7 @@ const steps = [
 
             <!-- FAQ Item 2 -->
             <v-expansion-panel>
-              <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+              <v-expansion-panel-title>
                 How do I schedule a waste collection appointment?
               </v-expansion-panel-title>
               <v-expansion-panel-text>
@@ -105,7 +100,7 @@ const steps = [
 
             <!-- FAQ Item 3 -->
             <v-expansion-panel>
-              <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+              <v-expansion-panel-title>
                 How do I pin my location for waste collection?
               </v-expansion-panel-title>
               <v-expansion-panel-text>
@@ -115,7 +110,7 @@ const steps = [
 
             <!-- FAQ Item 4 -->
             <v-expansion-panel>
-              <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+              <v-expansion-panel-title>
                 What types of waste does Waste Wise handle?
               </v-expansion-panel-title>
               <v-expansion-panel-text>
@@ -125,7 +120,7 @@ const steps = [
 
             <!-- FAQ Item 5 -->
             <v-expansion-panel>
-              <v-expansion-panel-title collapse-icon="mdi-minus" expand-icon="mdi-plus">
+              <v-expansion-panel-title>
                 How do I contact Waste Wise support?
               </v-expansion-panel-title>
               <v-expansion-panel-text>
@@ -143,6 +138,10 @@ const steps = [
 </template>
 
 <style scoped>
+
+.border-green {
+    border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+  }
 .v-expansion-panel-title {
   font-weight: bold;
   font-size: 1.1rem;
@@ -172,57 +171,114 @@ const steps = [
   line-height: 1.5;
 }
 
-.faq {
-  margin-left: 15px;
-  padding-right: 30px;
+/* General Fade-in Animation for the Section */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.3s ease;
+.calendar-card {
+  animation: fadeInUp 0.6s ease-out both;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+
+
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.calendar-cell {
+  margin: 8px;
+}
+
+/* Fade-in for individual day cards with staggered delay */
+.calendar-day-card {
+  padding: 16px;
+  border-radius: 8px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+/* Delays for staggered fade-in effect */
+.calendar-cell:nth-child(1) .calendar-day-card { animation-delay: 0.1s; }
+.calendar-cell:nth-child(2) .calendar-day-card { animation-delay: 0.2s; }
+.calendar-cell:nth-child(3) .calendar-day-card { animation-delay: 0.3s; }
+.calendar-cell:nth-child(4) .calendar-day-card { animation-delay: 0.4s; }
+.calendar-cell:nth-child(5) .calendar-day-card { animation-delay: 0.5s; }
+.calendar-cell:nth-child(6) .calendar-day-card { animation-delay: 0.6s; }
+.calendar-cell:nth-child(7) .calendar-day-card { animation-delay: 0.7s; }
+
+/* Hover Transform and Shadow on Each Day Card */
+.calendar-day-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #dcedc8;
+}
+
+/* Icon and Text Animations */
+@keyframes iconBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Animate the day name and waste type text */
+.day-name {
+  font-size: 1.2rem;
+  color: #388e3c;
+  transition: color 0.3s;
+}
+
+.day-icon {
+  color: #388e3c;
+  transition: transform 0.3s, color 0.3s;
+  animation: iconBounce 1s infinite;
+}
+
+.calendar-day-card:hover .day-icon {
+  color: #2e7d32;
+}
+
+.day-type {
+  font-size: 0.9rem;
+  color: #4b4b4b;
+  text-align: center;
   opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+  animation-delay: 0.2s;
 }
 
-.border-green {
-  border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+.calendar-day-card:hover .day-name {
+  color: #2e7d32;
+  transform: translateY(-2px);
 }
 
-.text-center {
-  text-align: center;
+.calendar-day-card:hover .day-type {
+  color: #4b4b4b;
+  transform: translateY(-2px);
 }
 
-.user-guide-card {
-  background-image: url('/images/bg2.jpg'); /* Replace with your actual image path */
-  background-size: contain;
-  background-position: center;
-  color: #fff;
-}
-
-
-.step-card {
-  background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
-}
-
-.step-card:hover {
-  transform: scale(1.05);
-}
-
-.step-title {
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-.step-icon {
-  font-size: 3rem;
-  color: #4B8B3B; /* Your theme color */
-}
-
-.text-center {
-  text-align: center;
-}
 </style>
