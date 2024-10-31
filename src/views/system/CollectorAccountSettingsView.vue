@@ -75,7 +75,7 @@ const isDrawerVisible = ref(true)
               </v-card-text>
             </v-card> -->
 
-            <v-card class="mb-5 border-green text-center" title="Profile Information ">
+            <v-card class="mb-5 border-green " title="Profile Information ">
               <v-card-text>
                 <ProfileForm></ProfileForm>
               </v-card-text>

@@ -18,9 +18,11 @@ watch(props, () => {
     :permanent="!mobile"
     width="300"
   >
-    <div class="logo-section d-flex align-center justify-center pa-4">
+  <div class="logo-section d-flex align-center justify-center pa-4">
+    <router-link to="/collector/dashboard">
       <img src="/images/logo2.png" alt="Logo" width="250" height="120" />
-    </div>
+    </router-link>
+  </div>
 
     <v-divider></v-divider>
 
@@ -30,8 +32,9 @@ watch(props, () => {
         <v-list-item class="nav-list-item">
           <v-card
             class="d-flex align-center nav-card"
-            elevation="3"
+            elevation="1"
             width="100%"
+            height="36px"
           >
             <v-list-item
               prepend-icon="mdi-view-dashboard"
@@ -45,8 +48,9 @@ watch(props, () => {
         <v-list-item class="nav-list-item">
           <v-card
             class="d-flex align-center nav-card"
-            elevation="3"
+            elevation="1"
             width="100%"
+            height="36px"
           >
             <v-list-item
               prepend-icon="mdi-information"
@@ -60,8 +64,9 @@ watch(props, () => {
         <v-list-item class="nav-list-item">
           <v-card
             class="d-flex align-center nav-card"
-            elevation="3"
+            elevation="1"
             width="100%"
+            height="36px"
           >
             <v-list-item
               prepend-icon="mdi-wrench"
@@ -86,7 +91,7 @@ watch(props, () => {
 }
 
 .nav-card {
-  border-radius: 2px;
+  border-radius: 0px;
   transition: 0.3s ease;
   width: 100%; /* Ensure card spans full width */
   margin-top: 13px;
