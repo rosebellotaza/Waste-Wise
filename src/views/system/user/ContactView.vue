@@ -230,11 +230,11 @@ const onFormSubmit = () => {
         </v-row>
       </v-container>
 
-      <v-footer :color="theme === 'light' ? 'green-darken-1' : 'green-darken-4'" elevation="24" border app>
+      <!-- <v-footer :color="theme === 'light' ? 'green-darken-1' : 'green-darken-4'" elevation="24" border app>
         <div :class="mobile ? 'w-100 text-center' : ''">
           Copyright © 2024 - Waste Wise | All Rights Reserved
         </div>
-      </v-footer>
+      </v-footer> -->
     </template>
   </AppLayout>
 </template>
@@ -276,7 +276,4 @@ h2 {
     border: 2px solid #4B8B3B;
 }
 
-.submit {
-  margin-left: 620px;
-}
 </style>

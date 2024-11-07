@@ -28,7 +28,6 @@ watch(props, () => {
 
     <!-- Navigation Items in Card Form -->
     <v-list density="compact" nav color="green-darken-1">
-      <v-list-item-group>
         <v-list-item class="nav-list-item">
           <v-card
             class="d-flex align-center nav-card"
@@ -76,7 +75,6 @@ watch(props, () => {
             ></v-list-item>
           </v-card>
         </v-list-item>
-      </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
 </template>
