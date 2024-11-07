@@ -5,13 +5,26 @@ import PictureForm from '@/components/system/PictureForm.vue'
 import ProfileForm from '@/components/system/ProfileForm.vue'
 import PasswordForm from '@/components/system/PasswordForm.vue'
 import { useAuthUserStore } from '@/stores/authUser'
-import { ref } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 
 // Utilize pre-defined vue functions
 const authStore = useAuthUserStore()
 
 // Load Variables
 const isDrawerVisible = ref(true)
+
+// Computed property for profile picture fallback
+const profilePictureUrl = computed(() => {
+  // Check if the image_url exists and is a valid URL
+  return authStore.userData?.image_url && isValidImageUrl(authStore.userData.image_url)
+    ? authStore.userData.image_url
+    : '/images/img-profile.png'
+})
+
+// Function to check if the image URL is valid
+const isValidImageUrl = (url) => {
+  return /^(https?:\/\/|\/images\/).+\.(jpg|jpeg|png|gif|bmp|svg)$/.test(url)
+}
 </script>
 
 <template>
@@ -42,7 +55,7 @@ const isDrawerVisible = ref(true)
                   class="mx-auto rounded-circle profile-picture"
                   color="green-darken-3"
                   aspect-ratio="1"
-                  :src="authStore.userData.image_url || '/images/img-profile.png'"
+                  :src="profilePictureUrl" 
                   alt="Profile Picture"
                   cover
                 >
@@ -58,47 +71,46 @@ const isDrawerVisible = ref(true)
                 <div class="text-center fade-in-text">
                   <h4 class="my-2">
                     <b class="text-green-darken-4">Fullname:</b>
-                    {{ authStore.userData.firstname + ' ' + authStore.userData.lastname }}
+                    {{ authStore.userData?.firstname + ' ' + authStore.userData?.lastname }}
                   </h4>
-                  <h4 class="my-2"><b class="text-green-darken-4">Email:</b> {{ authStore.userData.email }}</h4>
-                  <h4 class="my-2"><b class="text-green-darken-4">Contact No.:</b> {{ authStore.userData.phone }}</h4>
+                  <h4 class="my-2"><b class="text-green-darken-4">Email:</b> {{ authStore.userData?.email }}</h4>
+                  <h4 class="my-2"><b class="text-green-darken-4">Contact No.:</b> {{ authStore.userData?.phone }}</h4>
                 </div>
               </v-card-text>
             </v-card>
           </v-col>
 
           <v-col cols="12" lg="8">
-          <v-card class="mb-5 border-green fade-in" style="animation-delay: 0.4s;">
-            <v-card-title>
-              <v-icon class="mr-2" color="green darken-4">mdi-account-circle</v-icon> <!-- Icon for Profile Picture -->
-              Profile Picture
-            </v-card-title>
-            <v-card-text>
-              <PictureForm></PictureForm>
-            </v-card-text>
-          </v-card>
+            <v-card class="mb-5 border-green fade-in" style="animation-delay: 0.4s;">
+              <v-card-title>
+                <v-icon class="mr-2" color="green darken-4">mdi-account-circle</v-icon> <!-- Icon for Profile Picture -->
+                Profile Picture
+              </v-card-title>
+              <v-card-text>
+                <PictureForm></PictureForm>
+              </v-card-text>
+            </v-card>
 
-          <v-card class="mb-5 border-green fade-in" style="animation-delay: 0.6s;">
-            <v-card-title>
-              <v-icon class="mr-2" color="green darken-4">mdi-information</v-icon> <!-- Icon for Profile Information -->
-              Profile Information
-            </v-card-title>
-            <v-card-text>
-              <ProfileForm></ProfileForm>
-            </v-card-text>
-          </v-card>
+            <v-card class="mb-5 border-green fade-in" style="animation-delay: 0.6s;">
+              <v-card-title>
+                <v-icon class="mr-2" color="green darken-4">mdi-information</v-icon> <!-- Icon for Profile Information -->
+                Profile Information
+              </v-card-title>
+              <v-card-text>
+                <ProfileForm></ProfileForm>
+              </v-card-text>
+            </v-card>
 
-          <v-card class="mb-5 border-green fade-in" style="animation-delay: 0.8s;">
-            <v-card-title>
-              <v-icon class="mr-2" color="green darken-4">mdi-lock</v-icon> <!-- Icon for Change Password -->
-              Change Password
-            </v-card-title>
-            <v-card-text>
-              <PasswordForm></PasswordForm>
-            </v-card-text>
-          </v-card>
-        </v-col>
-
+            <v-card class="mb-5 border-green fade-in" style="animation-delay: 0.8s;">
+              <v-card-title>
+                <v-icon class="mr-2" color="green darken-4">mdi-lock</v-icon> <!-- Icon for Change Password -->
+                Change Password
+              </v-card-title>
+              <v-card-text>
+                <PasswordForm></PasswordForm>
+              </v-card-text>
+            </v-card>
+          </v-col>
         </v-row>
       </v-container>
     </template>

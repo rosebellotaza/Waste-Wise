@@ -3,17 +3,16 @@ import { getUserInformation, isAuthenticated } from '@/utils/supabase'
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/auth/LoginView.vue'
 import RegisterView from '@/views/auth/RegisterView.vue'
-import DashboardView from '@/views/system/DashboardView.vue'
-import AboutusView from '@/views/system/AboutusView.vue'
-import AccountSettingsView from '@/views/system/AccountSettingsView.vue'
-import UserRolesView from '@/views/system/manage-users/UserRolesView.vue'
-import AppointmentView from '@/views/system/AppointmentView.vue'
-import GuideView from '@/views/system/GuideView.vue'
-import ContactView from '@/views/system/ContactView.vue'
-import ForbiddenView from '@/views/system/ForbiddenView.vue'
-import CollectorDashboardView from '@/views/system/CollectorDashboardView.vue'
-import CollectorAccountSettingsView from '@/views/system/CollectorAccountSettingsView.vue'
-import UsersInformationView from '@/views/system/UsersInformationView.vue'
+import DashboardView from '@/views/system/user/DashboardView.vue'
+import AboutusView from '@/views/system/user/AboutusView.vue'
+import AccountSettingsView from '@/views/system/user/AccountSettingsView.vue'
+import AppointmentView from '@/views/system/user/AppointmentView.vue'
+import GuideView from '@/views/system/user/GuideView.vue'
+import ContactView from '@/views/system/user/ContactView.vue'
+import ForbiddenView from '@/views/system/error/ForbiddenView.vue'
+import CollectorDashboardView from '@/views/system/collector/CollectorDashboardView.vue'
+import CollectorAccountSettingsView from '@/views/system/collector/CollectorAccountSettingsView.vue'
+import UsersInformationView from '@/views/system/collector/UsersInformationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,12 +50,6 @@ const router = createRouter({
       name: 'accountsettings',
       component: AccountSettingsView,
       meta: { requiresAuth: true, requiresUser: true },
-    },
-    {
-      path: '/user/roles',
-      name: 'userroles',
-      component: UserRolesView,
-      meta: { requiresAuth: true, requiresAdmin: true },
     },
     {
       path: '/appointment',

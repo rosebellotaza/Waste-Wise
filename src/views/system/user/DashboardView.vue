@@ -11,30 +11,30 @@ const wasteCategories = [
     title: 'Biodegradable Waste',
     description:
       'Organic waste that can decompose naturally, such as food scraps and garden waste.',
-    image: '/path/to/biodegradable.jpg', // Replace with actual path
+    image: 'images/BiodegradableWaste.png', // Replace with actual path
   },
   {
     title: 'Non-Biodegradable Waste',
     description: 'Waste that does not decompose, like plastic and metal.',
-    image: '/path/to/non-biodegradable.jpg', // Replace with actual path
+    image: 'images/NonBiodegradableWaste.png', // Replace with actual path
   },
   {
     title: 'Recyclable Waste',
     description:
       'Materials that can be reprocessed and reused, including paper, glass, and some plastics.',
-    image: '/path/to/recyclable.jpg', // Replace with actual path
+    image: 'images/RecyclableWaste.png', // Replace with actual path
   },
   {
     title: 'Electronic Waste',
     description:
       'Discarded electronics such as phones, computers, and batteries.',
-    image: '/path/to/electronic.jpg', // Replace with actual path
+    image: 'images/electronicwaste.png', // Replace with actual path
   },
   {
     title: 'Special Waste',
     description:
       'Hazardous waste materials requiring specific disposal methods.',
-    image: '/path/to/special.jpg', // Replace with actual path
+    image: 'images/specialwaste.webp', // Replace with actual path
   },
 ]
 </script>

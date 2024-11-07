@@ -39,7 +39,6 @@ const navItems = [
 
     <!-- Navigation Items in Card Form -->
     <v-list density="compact" nav color="green-darken-1 " class="density">
-      <v-list-item-group>
         <v-list-item
           v-for="(item, index) in navItems"
           :key="index"
@@ -59,7 +58,6 @@ const navItems = [
             ></v-list-item>
           </v-card>
         </v-list-item>
-      </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -78,6 +76,7 @@ const navItems = [
   transition: 0.3s ease;
   width: 100%; /* Ensure card spans full width */
   margin-top: 13px;
+  /* border: 2px solid #4B8B3B;  */
 }
 
 .nav-card:hover {

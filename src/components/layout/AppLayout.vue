@@ -24,7 +24,7 @@ onMounted(() => {
 
 <template>
   <v-responsive class="border rounded" >
-    <v-app :theme="theme" >
+    <v-app  >
       <v-app-bar
         class="px-3"
         color="green-darken-1"
@@ -33,7 +33,6 @@ onMounted(() => {
       <v-app-bar-nav-icon
           v-if="props.isWithAppBarNavIcon"
           icon="mdi-menu"
-          :theme="theme"
           @click="emit('isDrawerVisible')"
         >
         </v-app-bar-nav-icon>
