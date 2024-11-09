@@ -5,7 +5,7 @@ import PictureForm from '@/components/system/PictureForm.vue'
 import ProfileForm from '@/components/system/ProfileForm.vue'
 import PasswordForm from '@/components/system/PasswordForm.vue'
 import { useAuthUserStore } from '@/stores/authUser'
-import { ref, computed, watchEffect } from 'vue'
+import { ref } from 'vue'
 
 // Utilize pre-defined vue functions
 const authStore = useAuthUserStore()
@@ -13,18 +13,6 @@ const authStore = useAuthUserStore()
 // Load Variables
 const isDrawerVisible = ref(true)
 
-// Computed property for profile picture fallback
-const profilePictureUrl = computed(() => {
-  // Check if the image_url exists and is a valid URL
-  return authStore.userData?.image_url && isValidImageUrl(authStore.userData.image_url)
-    ? authStore.userData.image_url
-    : '/images/img-profile.png'
-})
-
-// Function to check if the image URL is valid
-const isValidImageUrl = (url) => {
-  return /^(https?:\/\/|\/images\/).+\.(jpg|jpeg|png|gif|bmp|svg)$/.test(url)
-}
 </script>
 
 <template>
@@ -40,7 +28,7 @@ const isValidImageUrl = (url) => {
       <v-container>
         <v-card class="mb-5 fade-in">
           <template #title>
-            <span class="text-h6 font-weight-bold">
+            <span class="text-h6 font-weight-bold ">
               <v-breadcrumbs :items="['Account', 'Settings']" color="green-darken-3"></v-breadcrumbs>
             </span>
           </template>
@@ -48,20 +36,20 @@ const isValidImageUrl = (url) => {
 
         <v-row>
           <v-col cols="12" lg="4">
-            <v-card class="border-green fade-in" style="animation-delay: 0.2s;">
+            <v-card class="border-green">
               <v-card-text>
                 <v-img
                   width="50%"
-                  class="mx-auto rounded-circle profile-picture"
-                  color="green-darken-3"
+                  class="mx-auto rounded-circle"
+                  color="green-darken-1"
                   aspect-ratio="1"
-                  :src="profilePictureUrl" 
+                  :src="authStore.userData.image_url || '/images/img-profile.png'"
                   alt="Profile Picture"
                   cover
                 >
                 </v-img>
 
-                <h3 class="d-flex align-center justify-center mt-5 fade-in-text">
+                <h3 class="d-flex align-center justify-center mt-5">
                   <v-icon class="me-2" color="green-darken-4" icon="mdi-account-badge"> </v-icon>
                   {{ authStore.userRole }}
                 </h3>

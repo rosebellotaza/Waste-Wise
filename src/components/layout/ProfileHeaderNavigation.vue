@@ -48,7 +48,7 @@ const onLogout = async () => {
     <template #activator="{ props }">
       <v-btn icon v-bind="props">
         <v-avatar
-          v-if="authStore.userData.image_url"
+          v-if="authStore.userData && authStore.userData.image_url"
           :image="authStore.userData.image_url"
           color="green-darken-3"
           size="large"
@@ -58,10 +58,10 @@ const onLogout = async () => {
         <v-avatar v-else color="green-darken-3" size="large">
           <span class="text-h5">
             {{
-              getAvatarText(
+              getAvatarText(authStore.userData ?
                 authStore.userData.firstname +
                   ' ' +
-                  authStore.userData.lastname,
+                  authStore.userData.lastname : ''
               )
             }}
           </span>
@@ -73,14 +73,14 @@ const onLogout = async () => {
       <v-card-text>
         <v-list>
           <v-list-item
-            :subtitle="authStore.userData.email"
-            :title="
-              authStore.userData.firstname + ' ' + authStore.userData.lastname
+            :subtitle="authStore.userData ? authStore.userData.email: ''"
+            :title="authStore.userData ?
+              authStore.userData.firstname + ' ' + authStore.userData.lastname : ''
             "
           >
             <template #prepend>
               <v-avatar
-                v-if="authStore.userData.image_url"
+                v-if="authStore.userData && authStore.userData.image_url"
                 :image="authStore.userData.image_url"
                 color="green-darken-3"
                 size="large"
@@ -90,10 +90,10 @@ const onLogout = async () => {
               <v-avatar v-else color="green-darken-3" size="large">
                 <span class="text-h5">
                   {{
-                    getAvatarText(
+                    getAvatarText(authStore.userData ?
                       authStore.userData.firstname +
                         ' ' +
-                        authStore.userData.lastname,
+                        authStore.userData.lastname: ''
                     )
                   }}
                 </span>

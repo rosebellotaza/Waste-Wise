@@ -48,15 +48,14 @@ const onSubmit = async () => {
   /// Reset Form Action utils; Turn on processing at the same time
   formAction.value = { ...formActionDefault, formProcess: true }
 
-  const response = await authStore.updateUserImage(formData.value.image)
+  const {data, error} = await authStore.updateUserImage(formData.value.image)
 
   // Check if successful
-  if (response.success) {
+  if (error) {
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
     formAction.value.formSuccessMessage = 'Successfully Updated Profile Image.'
-  } else {
-    // Add Error Message and Status Code
-    formAction.value.formErrorMessage = response.error.message
-    formAction.value.formStatus = response.error.status
   }
 
   // Turn off processing
@@ -77,25 +76,19 @@ const onFormSubmit = () => {
     :form-error-message="formAction.formErrorMessage"
   />
 
-  <v-form ref="refVForm" @submit.prevent="onFormSubmit" class="profile-update-form mx-auto my-8 pa-5 rounded-lg elevation-3">
-    <v-row align="center" class="text-center mb-8">
-      <v-col cols="12" md="5" class="d-flex justify-center">
-        <v-hover v-slot:default="{ isHovering }">
-          <v-img
-            class="profile-image rounded-circle shadow transition"
-            :class="{ 'scale-hover': isHovering }"
-            width="150"
-            height="200"
-            :src="imgPreview || '/images/img-profile.png'"
-            alt="Profile Picture Preview"
-            color="grey-lighten-4"
-            cover
-          >
-            <template v-slot:placeholder>
-              <v-icon color="grey-darken-1" size="64">mdi-account-circle</v-icon>
-            </template>
-          </v-img>
-        </v-hover>
+  <v-form ref="refVForm" @submit.prevent="onFormSubmit">
+    <v-row  class="text-green-darken-4 mt-2">
+      <v-col cols="12" md="5">
+        <v-img
+          width="55%"
+          class="mx-auto rounded-circle"
+          color="green-darken-4"
+          aspect-ratio="1"
+          :src="imgPreview"
+          alt="Profile Picture Preview"
+          cover
+        >
+        </v-img>
       </v-col>
 
       <v-col cols="12" md="7" class="text-md-left">
@@ -111,8 +104,7 @@ const onFormSubmit = () => {
           dense
           @change="onPreview"
           @click:clear="onPreviewReset"
-        />
-
+        ></v-file-input>
         <v-btn
           type="submit"
           class="update-button mt-4 py-3 px-8 text-uppercase font-weight-bold rounded-pill"
