@@ -68,6 +68,10 @@ const onFormSubmit = () => {
           dense
         />
       </v-col>
+<!-- 
+      <v-col cols="12" md="4">
+        <v-text-field v-model="formData.middlename" label="Middle Name" outlined dense />
+      </v-col> -->
 
       <v-col cols="12" md="6">
         <v-text-field
@@ -103,13 +107,6 @@ const onFormSubmit = () => {
         />
       </v-col>
     </v-row>
-
-          <!-- Simple display button -->
-      <v-col cols="12" md="4">
-        <v-btn color="green darken-4" outlined>
-          Pin Location on Map
-        </v-btn>
-      </v-col>
 
     <v-btn
       type="submit"

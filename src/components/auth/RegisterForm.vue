@@ -39,7 +39,6 @@ import { requiredValidator,emailValidator, passwordValidator, confirmedValidator
         firstname:formData.value.firstname,
         lastname: formData.value.lastname,
         is_admin:false,
-        // role: 'Collector'//if role based
       }
     }
   })

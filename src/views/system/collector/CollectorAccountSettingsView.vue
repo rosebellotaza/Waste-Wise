@@ -1,11 +1,10 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
 import PictureForm from '@/components/system/PictureForm.vue'
-import ProfileForm from '@/components/system/ProfileForm.vue'
-import PasswordForm from '@/components/system/PasswordForm.vue'
 import CollectorSideNavigation from '@/components/layout/CollectorSideNavigation.vue'
 import { useAuthUserStore } from '@/stores/authUser'
 import { ref } from 'vue'
+import CollectorProfileForm from '@/components/system/CollectorProfileForm.vue'
 
 // Utilize pre-defined vue functions
 const authStore = useAuthUserStore()
@@ -77,15 +76,9 @@ const isDrawerVisible = ref(true)
 
             <v-card class="mb-5 border-green " title="Profile Information ">
               <v-card-text>
-                <ProfileForm></ProfileForm>
+                <CollectorProfileForm></CollectorProfileForm>
               </v-card-text>
             </v-card>
-<!-- 
-            <v-card class="mb-5 border-green" title="Change Password">
-              <v-card-text>
-                <PasswordForm></PasswordForm>
-              </v-card-text>
-            </v-card> -->
           </v-col>
         </v-row>
       </v-container>
