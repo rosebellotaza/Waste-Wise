@@ -69,7 +69,7 @@ const onLogout = async () => {
       </v-btn>
     </template>
 
-    <v-card class="mt-1">
+    <v-card class="mt-1" >
       <v-card-text>
         <v-list>
           <v-list-item
@@ -101,10 +101,6 @@ const onLogout = async () => {
             </template>
           </v-list-item>
         </v-list>
-<!-- 
-        <v-btn prepend-icon="mdi-wrench" variant="plain" to="/account/settings">
-          Account Settings
-        </v-btn> -->
 
         <v-divider class="my-3"></v-divider>
 
@@ -129,7 +125,7 @@ const onLogout = async () => {
 
 <style scoped>
 .border-green {
-    border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+    border: 3px solid #4B8B3B; /* Adjust the color and width as needed */
   }
 
 </style>
