@@ -53,7 +53,7 @@ else if (data) {
   formAction.value.formSuccessMessage = 'Successfully Registered Account!'
   //Add here more actions if you want
   // refVForm.value?.reset()
-  // router.replace('/register')
+  router.replace('/dashboard')
 }
 
 refVForm.value?.reset()
