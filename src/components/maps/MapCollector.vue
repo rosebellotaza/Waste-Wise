@@ -1,9 +1,11 @@
 <script setup>
 import leaflet from 'leaflet'
+import 'leaflet-routing-machine'
 import { onMounted, ref, watchEffect } from 'vue'
 import { useGeolocation } from '@vueuse/core'
+import { supabase } from '@/utils/supabase' // Import Supabase client
 
-// Utilize pre-defined vue functions; GeoLocation
+// Utilize pre-defined Vue functions; GeoLocation
 const { coords, locatedAt, resume, pause } = useGeolocation({
   enableHighAccuracy: true,
   timeout: 10000,
@@ -12,55 +14,122 @@ const { coords, locatedAt, resume, pause } = useGeolocation({
 
 // Load Variables
 let map
-let marker
-const defaultLatLng = [8.94740526304622, 125.54397750841223] // Butuan Coords
+let collectorMarker
+let routeControl
+const defaultLatLng = [8.94740526304622, 125.54397750841223] // Butuan Coordinates
 const isTrackingPause = ref(false)
+const pinnedLocations = ref([]) // Store pinned locations
+
+// Function to fetch and add markers for all pinned locations
+const fetchAndAddMarkers = async () => {
+  const { data, error } = await supabase.from('waste_markers').select('*')
+  if (error) {
+    console.error('Error fetching pinned locations:', error)
+    return
+  }
+
+  // Store pinned locations and add markers to the map
+  pinnedLocations.value = data.map(({ latitude, longitude }) => ({
+    lat: latitude,
+    lng: longitude,
+    marker: leaflet
+      .marker([latitude, longitude], { icon: defaultPinIcon() })
+      .addTo(map)
+      .bindPopup(`Pinned Location: (${latitude}, ${longitude})`),
+  }))
+}
+
+// Create custom icons for markers
+const defaultPinIcon = () =>
+  leaflet.icon({
+    iconUrl: 'images/default-pin.png', // Replace with actual URL for the default pin
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  })
+
+const passedPinIcon = () =>
+  leaflet.icon({
+    iconUrl: 'images/passed-pin.png', // Replace with actual URL for the passed pin
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  })
+
+const collectorIcon = () =>
+  leaflet.icon({
+    iconUrl: 'images/collector-icon.png', // Replace with actual URL for the collector icon
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+  })
+
+// Update the collector's location and route
+const updateCollectorLocationAndRoute = () => {
+  const collectorLatLng = [coords.value.latitude, coords.value.longitude]
+
+  // Add or update the collector's marker
+  if (!collectorMarker) {
+    collectorMarker = leaflet
+      .marker(collectorLatLng, { icon: collectorIcon() })
+      .addTo(map)
+      .bindPopup('You are here.')
+  } else {
+    collectorMarker.setLatLng(collectorLatLng).openPopup()
+  }
+
+  // Remove the previous route if it exists
+  if (routeControl) map.removeControl(routeControl)
+
+  // Add a new route control with road-aware routing
+  routeControl = leaflet.Routing.control({
+    waypoints: [
+      leaflet.latLng(collectorLatLng), // Collector's location
+      ...pinnedLocations.value.map((loc) => leaflet.latLng(loc.lat, loc.lng)), // Pinned locations
+    ],
+    routeWhileDragging: false,
+    show: false, // Hide routing machine's UI
+    lineOptions: {
+      styles: [{ color: 'gray', weight: 4 }],
+    },
+  }).addTo(map)
+
+  // Check if the collector passed through any pinned location
+  const proximityThreshold = 0.01 // Adjust threshold for proximity
+  pinnedLocations.value.forEach((location) => {
+    const distance = Math.sqrt(
+      Math.pow(collectorLatLng[0] - location.lat, 2) +
+        Math.pow(collectorLatLng[1] - location.lng, 2)
+    )
+
+    if (distance < proximityThreshold) {
+      // Change the marker icon to "passed"
+      location.marker.setIcon(passedPinIcon())
+    }
+  })
+}
 
 // Toggle Geolocation Tracking
 const onTrackingPause = () => {
   isTrackingPause.value = !isTrackingPause.value
 
-  // Pause Tracking
-  if (isTrackingPause.value) {
-    pause()
-    map.setView(defaultLatLng, 16)
-  }
-  // Resume Tracking
-  else {
-    resume()
-    setMapMarker()
-  }
+  if (isTrackingPause.value) pause()
+  else resume()
 }
 
-// Set Map Marker Function
-const setMapMarker = () => {
-  const newLatLng = [coords.value.latitude, coords.value.longitude]
-
-  // Update map view and marker position
-  map.setView(newLatLng, 18)
-
-  // If the marker is not on the map, add it
-  if (!marker._map) marker.addTo(map)
-
-  // Set the marker's position to the new coordinates
-  marker.setLatLng(newLatLng).openPopup()
-}
-
-// Watch Coords variable if it changes
+// Watch for changes in the collector's location
 watchEffect(() => {
   if (
     coords.value.latitude !== Number.POSITIVE_INFINITY &&
     coords.value.longitude !== Number.POSITIVE_INFINITY
-  )
-    setMapMarker()
+  ) {
+    updateCollectorLocationAndRoute()
+  }
 })
 
-// Load Functions during component rendering
+// Initialize the map and load pinned locations
 onMounted(() => {
-  // Load Map, set view to default coords, Zoom = 16
+  // Initialize the map
   map = leaflet.map('map').setView(defaultLatLng, 16)
 
-  // Load OpenStreetmap Map Layer
+  // Load OpenStreetMap layer
   leaflet
     .tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -69,20 +138,19 @@ onMounted(() => {
     })
     .addTo(map)
 
-  // Load Marker, set view to default coords
-  marker = leaflet.marker(defaultLatLng).addTo(map).bindPopup('You are here!')
+  // Fetch and display pinned locations
+  fetchAndAddMarkers()
 })
 </script>
 
 <template>
   <v-card
-    title="Current Location"
-    :subtitle="`LatLng: ${coords.latitude}, ${coords.longitude} | Date/Time: ${new Date(locatedAt).toLocaleString()}`"
-  >
+    title="Pinned Locations"
+    :subtitle="`LatLng: ${coords.latitude}, ${coords.longitude} | Date/Time: ${new Date(locatedAt).toLocaleString()}`">
+
     <template #append>
       <v-btn @click="onTrackingPause" variant="text" icon>
         <v-icon :icon="isTrackingPause ? 'mdi-refresh' : 'mdi-pause'"></v-icon>
-
         <v-tooltip activator="parent" location="top">
           {{ isTrackingPause ? 'Resume Tracking' : 'Pause Tracking' }}
         </v-tooltip>
