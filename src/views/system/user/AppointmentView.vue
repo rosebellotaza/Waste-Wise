@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
 import SideNavigation from '@/components/layout/SideNavigation.vue'
+import MapUser from '@/components/maps/MapUser.vue';
 import { ref } from 'vue'
 
 const isDrawerVisible = ref(true);
@@ -22,7 +23,7 @@ const steps = [
 {
     title: 'Step 1: Set your Schedule',
     icon: 'mdi-calendar-clock',
-    description: 'Log in to your account and go to schedule section.',
+    description: 'Log in to your account and go to Appointment section. You may check the Guide option for the collection schedule to see what type of waste is collected on specific days.',
   },
   {
     title: 'Step 2: Pin Your Location',
@@ -77,9 +78,9 @@ const steps = [
               <v-row>
                 <v-col v-for="(step, index) in steps" :key="index" cols="12" md="4" class="d-flex align-center justify-center">
                   <v-card class="step-card">
-                    <v-card-title class="step-title text-center">{{ step.title }}</v-card-title>
+                    <v-card-title class="step-title text-center pt-3">{{ step.title }}</v-card-title>
                     <v-card-text class="text-center">
-                      <v-icon class="step-icon">{{ step.icon }}</v-icon>
+                      <v-icon class="step-icon p-2">{{ step.icon }}</v-icon>
                       <p>{{ step.description }}</p>
                     </v-card-text>
                   </v-card>
@@ -110,19 +111,6 @@ const steps = [
             </template>
           </v-text-field>
 
-          <!-- Email Address -->
-          <v-text-field
-            v-model="form.email"
-            label="Email Address"
-            outlined
-            dense
-            class="my-4"
-          >
-            <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4">mdi-email</v-icon>
-            </template>
-          </v-text-field>
-
           <!-- Phone Number -->
           <v-text-field
             v-model="form.phoneNumber"
@@ -136,44 +124,14 @@ const steps = [
             </template>
           </v-text-field>
 
-           <!-- Location Button
-           <v-btn
-            color="green darken-4"
-            class="my-4"
-            outlined
-            @click="openMapDialog"
-          >
-            <v-icon left>mdi-map-marker</v-icon>
-            Pin Your Location
-          </v-btn> -->
-
-          <!-- Additional Comments -->
-          <v-textarea
-            v-model="form.comments"
-            label="Additional Comments"
-            outlined
-            dense
-            rows="3"
-            class="my-4"
-          >
+          <v-card>
             <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4">mdi-comment-text-outline</v-icon>
+              <v-icon color="green-darken-4"> mdi-pin</v-icon>
             </template>
-          </v-textarea>
-
-          <!-- Submit Button -->
-          <v-btn
-              color="green darken-1"
-              class="mt-4 mx-auto d-block"
-              elevation="2"
-              @click="submitForm"
-            >
-              Schedule Appointment
-            </v-btn>
+            <MapUser></MapUser>
+          </v-card>
             <br>
         </v-form>
-
-
         </v-card>
       </v-container>
     </template>
@@ -242,6 +200,8 @@ const steps = [
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
+  height: 251px;
+  width: 500px;
 }
 
 .step-card:hover {
