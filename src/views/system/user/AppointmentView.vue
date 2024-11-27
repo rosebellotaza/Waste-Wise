@@ -96,34 +96,6 @@ const steps = [
             <br>
             Pick Up Disposal
           </v-card-title>
-
-          <v-form class="form">
-          <!-- Full Name -->
-          <v-text-field
-            v-model="form.fullName"
-            label="Full Name"
-            outlined
-            dense
-            class="my-4"
-          >
-            <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4">mdi-account</v-icon>
-            </template>
-          </v-text-field>
-
-          <!-- Phone Number -->
-          <v-text-field
-            v-model="form.phoneNumber"
-            label="Phone Number"
-            outlined
-            dense
-            class="my-4"
-          >
-            <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4">mdi-phone</v-icon>
-            </template>
-          </v-text-field>
-
           <v-card>
             <template v-slot:prepend-inner>
               <v-icon color="green-darken-4"> mdi-pin</v-icon>
@@ -131,7 +103,6 @@ const steps = [
             <MapUser></MapUser>
           </v-card>
             <br>
-        </v-form>
         </v-card>
       </v-container>
     </template>
@@ -160,11 +131,6 @@ const steps = [
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.form {
-  margin-left: 15px;
-  margin-right: 15px;
 }
 
 .green-icon .v-input__prepend-inner .v-icon {
