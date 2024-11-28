@@ -131,8 +131,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-card>
-    <v-card-title class="pt-4 py-4">
+  <v-card class="custom-card">
+    <v-card-title class="pt-5 py-5">
       <v-row align="center" dense>
         <v-icon color="green-darken-1" class="mr-2">mdi-pin</v-icon>
         <span class="pinning">Pin the Location</span>
@@ -140,37 +140,32 @@ onMounted(() => {
     </v-card-title>
     <v-card-text>
       <div id="map" style="height: 500px;"></div>
+      <v-text-field
+        v-model="formData.description"
+        label="Additional Description"
+        outlined
+        dense
+        class="mt-4"
+        v-slot:prepend-inner
+      >
+        <v-icon color="green-darken-4">mdi-text-box-outline</v-icon>
+      </v-text-field>
     </v-card-text>
-
-    <v-text-field
-      v-model="formData.description"
-      label="Additional Description"
-      outlined
-      dense
-      class="form mt-4"
-      v-slot:prepend-inner
-    >
-      <v-icon color="green-darken-4">mdi-text-box-outline</v-icon>
-    </v-text-field>
-
-    <!-- Submit Button -->
-    <v-btn
-      color="green darken-1"
-      class="mt-4 mx-auto d-block"
-      elevation="2"
-      @click="submitData"
-    >
-      Submit Location
-    </v-btn>
-    <br />
-    <br />
-
-    <!-- Popup Notification -->
-    <v-snackbar v-model="showPopup" color="success" timeout="3000">
-      {{ popupMessage }}
-    </v-snackbar>
   </v-card>
+  <br>
+
+  <!-- Submit Button outside the card -->
+  <v-btn
+    color="green darken-1"
+    class="mt-4 mx-auto d-block"
+    elevation="2"
+    @click="submitData"
+  >
+    Submit Location
+  </v-btn>
+  <br>
 </template>
+
 
 <style scoped>
 #map {
@@ -182,8 +177,10 @@ onMounted(() => {
   font-size: 18px;
 }
 
-.form {
-  margin-left: 15px;
-  margin-right: 15px;
+.custom-card {
+  margin-top: 5px;
+  margin-left: 16px;
+  margin-right: 16px;
 }
+
 </style>
