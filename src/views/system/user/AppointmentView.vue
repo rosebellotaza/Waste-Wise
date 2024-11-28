@@ -91,18 +91,16 @@ const steps = [
         </v-card>
 
         <!-- Appointment Form -->
-        <v-card class="my-5 p-5 fade-in border-green" outlined>
+        <v-card class="my-8 p-5 fade-in border-green" outlined>
           <v-card-title class="text-h5 font-weight-bold text-green-darken-1 text-center">
             <br>
             Pick Up Disposal
           </v-card-title>
-          <v-card>
             <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4"> mdi-pin</v-icon>
+              <v-icon color="green-darken-4">mdi-pin</v-icon>
             </template>
-            <MapUser></MapUser>
-          </v-card>
-            <br>
+            <MapUser />
+          <br />
         </v-card>
       </v-container>
     </template>
