@@ -5,7 +5,7 @@ import { onMounted, ref, watchEffect } from 'vue'
 import { useGeolocation } from '@vueuse/core'
 import { supabase } from '@/utils/supabase' // Import Supabase client
 
-// Utilize pre-defined Vue functions; GeoLocation
+// Utilize pre-defined Vue functions for Geolocation
 const { coords, locatedAt, resume, pause } = useGeolocation({
   enableHighAccuracy: true,
   timeout: 10000,
@@ -16,9 +16,10 @@ const { coords, locatedAt, resume, pause } = useGeolocation({
 let map
 let collectorMarker
 let routeControl
-const defaultLatLng = [8.94740526304622, 125.54397750841223] // Butuan Coordinates
+const defaultLatLng = [8.94740526304622, 125.54397750841223] // Default starting coordinates
 const isTrackingPause = ref(false)
 const pinnedLocations = ref([]) // Store pinned locations
+let currentPopup = null // Track the current open popup
 
 // Function to fetch and add markers for all pinned locations
 const fetchAndAddMarkers = async () => {
@@ -29,37 +30,25 @@ const fetchAndAddMarkers = async () => {
   }
 
   // Store pinned locations and add markers to the map
-  pinnedLocations.value = data.map(({ latitude, longitude }) => ({
+  pinnedLocations.value = data.map(({ latitude, longitude, description }) => ({
     lat: latitude,
     lng: longitude,
+    description: description || 'No description provided.', // Fallback if description is missing
     marker: leaflet
-      .marker([latitude, longitude], { icon: defaultPinIcon() })
+      .marker([latitude, longitude]) // Default marker for pinned locations
       .addTo(map)
-      .bindPopup(`Pinned Location: (${latitude}, ${longitude})`),
+      .bindPopup(`<b>Description:</b><br/>${description || 'No description provided.'}`)
+      .on('click', function () {
+        // Close previously opened popup
+        if (currentPopup) {
+          currentPopup.closePopup()
+        }
+        // Open the new popup
+        this.openPopup()
+        currentPopup = this // Set currentPopup to the newly opened one
+      })
   }))
 }
-
-// Create custom icons for markers
-const defaultPinIcon = () =>
-  leaflet.icon({
-    iconUrl: 'images/default-pin.png', // Replace with actual URL for the default pin
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-  })
-
-const passedPinIcon = () =>
-  leaflet.icon({
-    iconUrl: 'images/passed-pin.png', // Replace with actual URL for the passed pin
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-  })
-
-const collectorIcon = () =>
-  leaflet.icon({
-    iconUrl: 'images/collector-icon.png', // Replace with actual URL for the collector icon
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  })
 
 // Update the collector's location and route
 const updateCollectorLocationAndRoute = () => {
@@ -68,7 +57,7 @@ const updateCollectorLocationAndRoute = () => {
   // Add or update the collector's marker
   if (!collectorMarker) {
     collectorMarker = leaflet
-      .marker(collectorLatLng, { icon: collectorIcon() })
+      .marker(collectorLatLng) // Default marker for collector
       .addTo(map)
       .bindPopup('You are here.')
   } else {
@@ -90,20 +79,6 @@ const updateCollectorLocationAndRoute = () => {
       styles: [{ color: 'gray', weight: 4 }],
     },
   }).addTo(map)
-
-  // Check if the collector passed through any pinned location
-  const proximityThreshold = 0.01 // Adjust threshold for proximity
-  pinnedLocations.value.forEach((location) => {
-    const distance = Math.sqrt(
-      Math.pow(collectorLatLng[0] - location.lat, 2) +
-        Math.pow(collectorLatLng[1] - location.lng, 2)
-    )
-
-    if (distance < proximityThreshold) {
-      // Change the marker icon to "passed"
-      location.marker.setIcon(passedPinIcon())
-    }
-  })
 }
 
 // Toggle Geolocation Tracking
@@ -121,6 +96,8 @@ watchEffect(() => {
     coords.value.longitude !== Number.POSITIVE_INFINITY
   ) {
     updateCollectorLocationAndRoute()
+  } else {
+    console.error('Geolocation data not available or invalid.')
   }
 })
 
@@ -165,6 +142,6 @@ onMounted(() => {
 <style scoped>
 #map {
   width: 100%;
-  height: 500px;
+  height: 650px;
 }
 </style>
