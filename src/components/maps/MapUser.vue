@@ -1,8 +1,8 @@
-  <script setup>
-  import leaflet from 'leaflet';
-  import { ref, onMounted } from 'vue';
-  import { supabase } from '@/utils/supabase';
-  import { useAuthUserStore } from '@/stores/authUser';
+<script setup>
+import leaflet from 'leaflet';
+import { ref, onMounted } from 'vue';
+import { supabase } from '@/utils/supabase';
+import { useAuthUserStore } from '@/stores/authUser';
 
   // Reactive properties
   const formData = ref({
@@ -14,14 +14,14 @@
 
   const authStore = useAuthUserStore();
 
-  // Variables
-  let map;
+// Variables
+let map;
 
-  // Add pin on map click and update form data
-  const onMapClick = (e) => {
-    formData.value.latitude = e.latlng.lat;
-    formData.value.longitude = e.latlng.lng;
-  };
+// Add pin on map click and update form data
+const onMapClick = (e) => {
+  formData.value.latitude = e.latlng.lat;
+  formData.value.longitude = e.latlng.lng;
+};
 
   // Store data on submit
   const submitData = async () => {
@@ -42,32 +42,32 @@
       return;
     }
 
-    try {
-      const { data, error } = await supabase.from('waste_markers').insert([formData.value]);
-      if (error) {
-        console.error('Error storing location:', error.message);
-      } else {
-        leaflet
-          .marker([formData.value.latitude, formData.value.longitude])
-          .addTo(map)
-          .bindPopup(`Location Pinned!`)
-          .openPopup();
+  try {
+    const { data, error } = await supabase.from('waste_markers').insert([formData.value]);
+    if (error) {
+      console.error('Error storing location:', error.message);
+    } else {
+      leaflet
+        .marker([formData.value.latitude, formData.value.longitude])
+        .addTo(map)
+        .bindPopup(`Location Pinned!`)
+        .openPopup();
 
-        // Clear form after successful submission
-        formData.value.latitude = null;
-        formData.value.longitude = null;
-        formData.value.description = '';
-        console.log('Location and description stored successfully!');
-      }
-    } catch (err) {
-      console.error('Unexpected error:', err);
+      // Clear form after successful submission
+      formData.value.latitude = null;
+      formData.value.longitude = null;
+      formData.value.description = '';
+      console.log('Location and description stored successfully!');
     }
-  };
+  } catch (err) {
+    console.error('Unexpected error:', err);
+  }
+};
 
-  // Initialize map on mount
-  onMounted(() => {
-    const defaultLatLng = [8.94740526304622, 125.54397750841223] // Butuan Coords
-    map = leaflet.map('map').setView(defaultLatLng, 15);
+// Initialize map on mount
+onMounted(() => {
+  const defaultLatLng = [8.94740526304622, 125.54397750841223] // Butuan Coords
+  map = leaflet.map('map').setView(defaultLatLng, 15);
 
     leaflet
       .tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -76,48 +76,47 @@
       })
       .addTo(map);
 
-    map.on('click', onMapClick);
-  });
+  map.on('click', onMapClick);
+});
+</script>
 
 
-  </script>
+<template>
+  <v-card>
+    <v-card-title class="pt-4 py-4">
+      <v-row align="center" dense>
+        <v-icon color="green-darken-1" class="mr-2">mdi-pin</v-icon>
+        <span class="pinning">Pin the Location</span>
+      </v-row>
+    </v-card-title>
+    <v-card-text>
+      <div id="map" style="height: 500px;"></div>
+      <v-text-field
+        v-model="formData.description"
+        label="Additional Description"
+        outlined
+        dense
+        class="mt-4"
+        v-slot:prepend-inner
+      >
+        <v-icon color="green-darken-4">mdi-text-box-outline</v-icon>
+      </v-text-field>
+    </v-card-text>
+    
+    <!-- Submit Button -->
+  <v-btn
+    color="green darken-1"
+    class="mt-4 mx-auto d-block"
+    elevation="2"
+    @click="submitData"
+  >
+    Submit Location
+  </v-btn>
+  <br>
+  <br>
+  </v-card>
 
-
-  <template>
-    <v-card class="custom-card">
-      <v-card-title class="pt-5 py-5">
-        <v-row align="center" dense>
-          <v-icon color="green-darken-1" class="mr-2">mdi-pin</v-icon>
-          <span class="pinning">Pin the Location</span>
-        </v-row>
-      </v-card-title>
-      <v-card-text>
-        <div id="map" style="height: 500px;"></div>
-        <v-text-field
-          v-model="formData.description"
-          label="Additional Description"
-          outlined
-          dense
-          class="mt-4"
-          v-slot:prepend-inner
-        >
-          <v-icon color="green-darken-4">mdi-text-box-outline</v-icon>
-        </v-text-field>
-      </v-card-text>
-    </v-card>
-    <br>
-
-    <!-- Submit Button outside the card -->
-    <v-btn
-      color="green darken-1"
-      class="mt-4 mx-auto d-block"
-      elevation="2"
-      @click="submitData"
-    >
-      Submit Location
-    </v-btn>
-    <br>
-  </template>
+</template>
 
 
   <style scoped>
@@ -126,14 +125,7 @@
     height: 500px;
   }
 
-  .pinning {
-    font-size: 18px;
-  }
-
-  .custom-card {
-    margin-top: 5px;
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-
-  </style>
+.pinning {
+  font-size: 18px;
+}
+</style>
