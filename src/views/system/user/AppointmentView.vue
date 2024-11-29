@@ -20,7 +20,7 @@ function submitForm() {
 
 // Define the steps for the user guide
 const steps = [
-{
+  {
     title: 'Step 1: Set your Schedule',
     icon: 'mdi-calendar-clock',
     description: 'Log in to your account and go to Appointment section. You may check the Guide option for the collection schedule to see what type of waste is collected on specific days.',
@@ -91,47 +91,16 @@ const steps = [
         </v-card>
 
         <!-- Appointment Form -->
-        <v-card class="my-5 p-5 fade-in border-green" outlined>
+        <v-card class="my-8 p-5 fade-in border-green" outlined>
           <v-card-title class="text-h5 font-weight-bold text-green-darken-1 text-center">
             <br>
             Pick Up Disposal
           </v-card-title>
-
-          <v-form class="form">
-          <!-- Full Name -->
-          <v-text-field
-            v-model="form.fullName"
-            label="Full Name"
-            outlined
-            dense
-            class="my-4"
-          >
             <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4">mdi-account</v-icon>
+              <v-icon color="green-darken-4">mdi-pin</v-icon>
             </template>
-          </v-text-field>
-
-          <!-- Phone Number -->
-          <v-text-field
-            v-model="form.phoneNumber"
-            label="Phone Number"
-            outlined
-            dense
-            class="my-4"
-          >
-            <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4">mdi-phone</v-icon>
-            </template>
-          </v-text-field>
-
-          <v-card>
-            <template v-slot:prepend-inner>
-              <v-icon color="green-darken-4"> mdi-pin</v-icon>
-            </template>
-            <MapUser></MapUser>
-          </v-card>
-            <br>
-        </v-form>
+            <MapUser />
+          <br />
         </v-card>
       </v-container>
     </template>
@@ -162,22 +131,18 @@ const steps = [
   }
 }
 
-.form {
-  margin-left: 15px;
-  margin-right: 15px;
-}
-
 .green-icon .v-input__prepend-inner .v-icon {
   color: #1B5E20; /* green darken-4 */
 }
 
 .border-green {
-    border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
-  }
+  border: 2px solid #4B8B3B; /* Adjust the color and width as needed */
+}
 
-  .fade-enter-active, .fade-leave-active {
+.fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0;
 }
@@ -192,7 +157,6 @@ const steps = [
   background-position: center;
   color: #fff;
 }
-
 
 .step-card {
   background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
