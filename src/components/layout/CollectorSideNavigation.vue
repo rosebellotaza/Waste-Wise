@@ -44,7 +44,7 @@ watch(props, () => {
           </v-card>
         </v-list-item>
 
-        <v-list-item class="nav-list-item">
+        <!-- <v-list-item class="nav-list-item">
           <v-card
             class="d-flex align-center nav-card"
             elevation="1"
@@ -58,7 +58,7 @@ watch(props, () => {
               class="nav-content"
             ></v-list-item>
           </v-card>
-        </v-list-item>
+        </v-list-item> -->
 
         <v-list-item class="nav-list-item">
           <v-card
