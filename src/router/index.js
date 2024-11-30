@@ -80,12 +80,12 @@ const router = createRouter({
       component: CollectorDashboardView,
       meta: { requiresAuth: true, requiresAdmin: true },
     },
-    {
-      path: '/users/information',
-      name: 'usersinformation',
-      component: UsersInformationView,
-      meta: { requiresAuth: true, requiresAdmin: true },
-    },
+    // {
+    //   path: '/users/information',
+    //   name: 'usersinformation',
+    //   component: UsersInformationView,
+    //   meta: { requiresAuth: true, requiresAdmin: true },
+    // },
     {
       path: '/collector/settings',
       name: 'collectorsettings',
