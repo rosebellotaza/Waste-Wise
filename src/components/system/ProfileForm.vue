@@ -104,13 +104,6 @@ const onFormSubmit = () => {
       </v-col>
     </v-row>
 
-          <!-- Simple display button -->
-      <v-col cols="12" md="4">
-        <v-btn color="green darken-4" outlined>
-          Pin Location on Map
-        </v-btn>
-      </v-col>
-
     <v-btn
       type="submit"
       class="update-button mt-4 py-3 px-8 text-uppercase font-weight-bold rounded-pill"

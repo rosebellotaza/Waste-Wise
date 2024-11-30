@@ -71,7 +71,7 @@ const features = [
             <v-col cols="12" md="4" class="team-member fade-in-up">
               <v-card outlined class="border-green">
                 <v-avatar size="150" class="mx-auto my-4">
-                  <img src="/images/team2.jpg" alt="Girly Jane Notarion" class="avatar-image" />
+                  <img src="/images/gjane.jpg" alt="Girly Jane Notarion" class="avatar-image" />
                 </v-avatar>
                 <div class="font-weight-bold text-h6 text-green-darken-3">Girly Jane Notarion</div>
                 <div class="mb-4 text-body-2">System Analyst</div>
@@ -80,10 +80,10 @@ const features = [
                   <v-btn icon href="https://www.facebook.com/jane.notarion" target="_blank">
                     <v-icon color="green">mdi-facebook</v-icon>
                   </v-btn>
-                  <v-btn icon href="https://wa.me/your-number" target="_blank">
+                  <v-btn icon href="https://wa.me/+639811292542" target="_blank">
                     <v-icon color="green">mdi-whatsapp</v-icon>
                   </v-btn>
-                  <v-btn icon href="https://github.com/your-link" target="_blank">
+                  <v-btn icon href="https://github.com/girlynotarion" target="_blank">
                     <v-icon color="green">mdi-github</v-icon>
                   </v-btn>
                 </v-row>
@@ -93,7 +93,7 @@ const features = [
             <v-col cols="12" md="4" class="team-member fade-in-up">
               <v-card outlined class="border-green">
                 <v-avatar size="150" class="mx-auto my-4">
-                  <img src="/images/team1.jpg" alt="Rosebell Narie Otaza" class="avatar-image" />
+                  <img src="/images/rbell.jpg" alt="Rosebell Narie Otaza" class="avatar-image" />
                 </v-avatar>
                 <div class="font-weight-bold text-h6 text-green-darken-3">Rosebell Narie Otaza</div>
                 <div class="mb-4 text-body-2">Frontend Developer</div>
