@@ -16,7 +16,7 @@ watch(props, () => {
     v-model="isDrawerVisible"
     :temporary="mobile"
     :permanent="!mobile"
-    width="300"
+    width="280"
   >
   <div class="logo-section d-flex align-center justify-center pa-4">
     <router-link to="/collector/dashboard">

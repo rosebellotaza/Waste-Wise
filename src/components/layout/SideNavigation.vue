@@ -25,7 +25,7 @@ const navItems = [
     v-model="isDrawerVisible"
     :temporary="mobile"
     :permanent="!mobile"
-    width="320"
+    width="280"
   >
     <!-- Logo Section -->
   <div class="logo-section d-flex align-center justify-center pa-4">
