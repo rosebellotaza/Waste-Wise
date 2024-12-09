@@ -41,7 +41,11 @@ const onTrackingPause = () => {
  */
 const fetchAndAddMarkers = async () => {
   try {
-    const { data, error } = await supabase.from('waste_markers').select('*');
+    // Fetch only markers with status "pending"
+    const { data, error } = await supabase
+      .from('waste_markers')
+      .select('*')
+      .eq('status', 'pending'); // Exclude collected markers
     if (error) throw error;
 
     // Add markers only if they are not already in the array
@@ -55,7 +59,7 @@ const fetchAndAddMarkers = async () => {
           .addTo(map)
           .bindPopup(
             `<b>Description:</b><br/>${description || 'No description provided.'}
-            <br/> <br> <button class="btn-delete-marker" style="
+            <br/><br/><button class="btn-delete-marker" style="
               background-color: #4c8063; 
               color: white; 
               border: none; 
@@ -64,8 +68,7 @@ const fetchAndAddMarkers = async () => {
               border-radius: 3px; 
               cursor: pointer; 
               box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
-              transition: all 0.3s ease;
-              align-items:center" 
+              transition: all 0.3s ease;" 
               data-id="${id}">
               Mark as Collected
             </button>`
@@ -73,7 +76,7 @@ const fetchAndAddMarkers = async () => {
           .on('popupopen', function () {
             const deleteButton = document.querySelector('.btn-delete-marker');
             if (deleteButton) {
-              deleteButton.addEventListener('click', () => removeMarker(id, marker));
+              deleteButton.addEventListener('click', () => markAsCollected(id, marker));
             }
           })
           .on('click', function () {
@@ -94,15 +97,19 @@ const fetchAndAddMarkers = async () => {
   }
 };
 
+
 /**
- * Remove a marker from the map and database
+ * Mark a location as collected by updating the status in the database and removing the marker from the map
  */
-const removeMarker = async (id, marker) => {
+const markAsCollected = async (id, marker) => {
   try {
-    // Delete the marker from the database
-    const { error } = await supabase.from('waste_markers').delete().eq('id', id);
+    // Update the status in the database
+    const { data, error } = await supabase
+      .from('waste_markers')
+      .update({ status: 'collected' })
+      .eq('id', id);
     if (error) {
-      console.error('Error deleting marker:', error);
+      console.error('Error updating marker status:', error);
       return;
     }
 
@@ -112,9 +119,8 @@ const removeMarker = async (id, marker) => {
     // Remove the marker from the local state
     pinnedLocations.value = pinnedLocations.value.filter((loc) => loc.id !== id);
 
-    console.log(`Marker with ID ${id} has been removed.`);
   } catch (error) {
-    console.error('Failed to remove marker:', error.message);
+    console.error('Failed to update marker status:', error.message);
   }
 };
 
@@ -218,6 +224,4 @@ watchEffect(() => {
   width: 100%;
   height: 650px;
 }
-
 </style>
-

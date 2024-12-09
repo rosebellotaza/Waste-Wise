@@ -10,6 +10,7 @@ const formData = ref({
   longitude: null,
   description: '',
   user_id: '', // Include user_id in the form data
+  status: 'pending', // Set default status as 'pending'
 });
 
 const authStore = useAuthUserStore();
@@ -72,14 +73,20 @@ const submitData = async () => {
     return;
   }
 
-  if (!formData.value.description) {
-    console.error('Error: Description is required.');
+  if (!formData.value.description.trim()) {
+    displayPopup('Description is required!');
     return;
   }
 
   try {
-    // Insert data into the waste_markers table
-    const { data, error } = await supabase.from('waste_markers').insert([formData.value]);
+    // Insert data into the waste_markers table, including the 'pending' status
+    const { data, error } = await supabase.from('waste_markers').insert([
+      {
+        ...formData.value, // Use the existing form data
+        status: 'pending', // Ensure the status is set to 'pending' when the location is pinned
+      },
+    ]);
+
     if (error) {
       console.error('Error storing location:', error.message);
     } else {
@@ -110,7 +117,9 @@ const submitData = async () => {
 // Watch for changes in latitude and longitude and log to the console
 watchEffect(() => {
   if (formData.value.latitude && formData.value.longitude) {
-    console.log(`Marker position changed: Latitude: ${formData.value.latitude}, Longitude: ${formData.value.longitude}`);
+    console.log(
+      `Marker position changed: Latitude: ${formData.value.latitude}, Longitude: ${formData.value.longitude}`
+    );
   }
 });
 
@@ -164,8 +173,18 @@ onMounted(() => {
     Submit Location
   </v-btn>
   <br>
-</template>
 
+  <!-- Success Popup -->
+  <v-alert
+    v-if="showPopup"
+    type="success"
+    border="top"
+    class="text-center mt-3"
+    outlined
+  >
+    {{ popupMessage }}
+  </v-alert>
+</template>
 
 <style scoped>
 #map {
@@ -182,5 +201,4 @@ onMounted(() => {
   margin-left: 16px;
   margin-right: 16px;
 }
-
 </style>
