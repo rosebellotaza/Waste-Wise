@@ -10,7 +10,7 @@ const formData = ref({
   longitude: null,
   description: '',
   user_id: '', // Include user_id in the form data
-  status: 'pending', // Set default status as 'pending'
+  status: 'pending', // Default status is 'pending'
 });
 
 const authStore = useAuthUserStore();
@@ -41,13 +41,6 @@ const addDraggableMarker = (latlng) => {
   });
 };
 
-// Handle map click to place the draggable marker
-const onMapClick = (e) => {
-  formData.value.latitude = e.latlng.lat;
-  formData.value.longitude = e.latlng.lng;
-  addDraggableMarker(e.latlng);
-};
-
 // Show success popup message
 const displayPopup = (message) => {
   popupMessage.value = message;
@@ -57,6 +50,39 @@ const displayPopup = (message) => {
   setTimeout(() => {
     showPopup.value = false;
   }, 3000);
+};
+
+// Attempt to get the user's current location and pin it
+const pinUserCurrentLocation = () => {
+  if (!navigator.geolocation) {
+    displayPopup('Geolocation is not supported by your browser.');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      formData.value.latitude = latitude;
+      formData.value.longitude = longitude;
+
+      // Center the map on the user's location
+      map.setView([latitude, longitude], 15);
+      addDraggableMarker({ lat: latitude, lng: longitude });
+
+      displayPopup('Your current location has been tentatively pinned. Please submit it.');
+    },
+    (error) => {
+      console.error('Error getting location:', error.message);
+      displayPopup('Unable to retrieve your location.');
+    }
+  );
+};
+
+// Handle map click to place a draggable marker
+const onMapClick = (e) => {
+  formData.value.latitude = e.latlng.lat;
+  formData.value.longitude = e.latlng.lng;
+  addDraggableMarker(e.latlng);
 };
 
 // Store data on submit
@@ -69,7 +95,7 @@ const submitData = async () => {
   }
 
   if (!formData.value.latitude || !formData.value.longitude) {
-    console.error('Error: Latitude and longitude must be selected on the map.');
+    displayPopup('Error: Latitude and longitude must be selected on the map.');
     return;
   }
 
@@ -79,11 +105,11 @@ const submitData = async () => {
   }
 
   try {
-    // Insert data into the waste_markers table, including the 'pending' status
+    // Insert data into the waste_markers table
     const { data, error } = await supabase.from('waste_markers').insert([
       {
         ...formData.value, // Use the existing form data
-        status: 'pending', // Ensure the status is set to 'pending' when the location is pinned
+        status: 'pending', // Ensure the status is set to 'pending'
       },
     ]);
 
@@ -93,11 +119,11 @@ const submitData = async () => {
       leaflet
         .marker([formData.value.latitude, formData.value.longitude])
         .addTo(map)
-        .bindPopup('Location Pinned!')
+        .bindPopup('Location Submitted!')
         .openPopup();
 
       // Show success popup
-      displayPopup('Location pinned successfully!');
+      displayPopup('Location submitted successfully!');
 
       // Clear form after successful submission
       formData.value.latitude = null;
@@ -123,7 +149,7 @@ watchEffect(() => {
   }
 });
 
-// Initialize map on mount
+// Initialize map and attempt to pin user's current location on mount
 onMounted(() => {
   const defaultLatLng = [8.94740526304622, 125.54397750841223]; // Butuan Coords
   map = leaflet.map('map').setView(defaultLatLng, 15);
@@ -135,6 +161,10 @@ onMounted(() => {
     })
     .addTo(map);
 
+  // Automatically pin current location on login
+  pinUserCurrentLocation();
+
+  // Allow user to pin locations by clicking on the map
   map.on('click', onMapClick);
 });
 </script>
@@ -163,7 +193,7 @@ onMounted(() => {
   </v-card>
   <br>
 
-  <!-- Submit Button outside the card -->
+  <!-- Submit Button -->
   <v-btn
     color="green darken-1"
     class="mt-4 mx-auto d-block"
